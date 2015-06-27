@@ -2,6 +2,14 @@
 
 ###Read in Data (format data into the Y, U and X matrices)
 
+{
+  if (Sys.info()[8] == "dpritch")
+    setwd("/home/dpritch/Documents/Projects/Dunson Day Specific/Software")
+  else
+    setwd("sam's working directory please change")
+}
+load("Data/PracticeDat.RData")
+
 ###Create Data Objects (define objects like n, n_i)
 
 ###Matrix Objects (define objects )

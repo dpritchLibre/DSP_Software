@@ -1,26 +1,32 @@
 
-# Load data simulation functions ----------------------------------------------
+# Load data simulation functions -----------------------------------------------
 #
 # TODO: encapsulate the files into 1 driver
 
-setwd("/home/dpritch/Documents/Projects/Dunson Day Specific/Software/Data_Sim")
-source("SampBaseline.R")
-source("SampCycle.R")
-source("SampDaily.R")
-source("SampDataComb.R")
-source("SampPreg.R")
+{
+if (Sys.info()[8] == "dpritch")
+  setwd("/home/dpritch/Documents/Projects/Dunson Day Specific/Software")
+else
+  setwd("sam's working directory please change")
+}
+
+source("Data_Sim/SampBaseline.R")
+source("Data_Sim/SampCycle.R")
+source("Data_Sim/SampDaily.R")
+source("Data_Sim/SampDataComb.R")
+source("Data_Sim/SampPreg.R")
 
 
 
 
-# Define study id's (and hence size)  -----------------------------------------
+# Define study id's (and hence size)  ------------------------------------------
 
 subjId <- 1:300
 
 
 
 
-# Sample baseline data --------------------------------------------------------
+# Sample baseline data ---------------------------------------------------------
 
 baseNames <- c("age","race","bmi","gravid","edu","depr","smoke","drinkAlc","hormContrac")
 
@@ -43,7 +49,7 @@ baselinePre <- sampBaseline(subjId=subjId, varDist=baseDist, varNames=baseNames)
 
 
 
-# Sample cycle data -----------------------------------------------------------
+# Sample cycle data ------------------------------------------------------------
 
   # Describe the left and right truncation of observed data.  'lengthDist' is interpreted by
   # sampCycle as *additional cycles in study after the first* (i.e. 0 is an allowable value).
@@ -71,7 +77,7 @@ cyclePre <- sampCycle(subjId=subjId, entryDist=entryDist, lengthDist=lengthDist,
 
 
 
-# Sample daily data -----------------------------------------------------------
+# Sample daily data ------------------------------------------------------------
 
 dailyNames <- c("intercourse","cm_monit","lube")
 
@@ -86,14 +92,14 @@ dailyPre <- sampDaily(nTot=nrow(cyclePre), fwLen=5, varDist=dailyDist, varNames=
 
 
 
-# Combine data into a daily set -----------------------------------------------
+# Combine data into a daily set ------------------------------------------------
 
 analyData <- sampDataComb(baseline=baselinePre, cycle=cyclePre, daily=dailyPre, fwLen=5)
 
 
 
 
-# Sample subject pregnancy ----------------------------------------------------
+# Sample subject pregnancy -----------------------------------------------------
 
 betaDays <- log( c(0.14, 0.08, 0.34, 0.31, 0.08) )
 betaCovs <- list( age = c(-0.08, -0.43, -1.03),
@@ -103,6 +109,32 @@ betaCovs <- list( age = c(-0.08, -0.43, -1.03),
 pregVecPre <- sampPreg(dspDat=analyData, betaDays=betaDays, betaCovs=betaCovs, phi=1, fwLen=5)
 
 finalData <- rmSuperfluous(baselinePre, cyclePre, dailyPre, pregVecPre)
-list2env(finalData, envir=.GlobalEnv)
+invisible( list2env(finalData, envir=.GlobalEnv) )
 rm(list=setdiff(ls(), c("baseline","cycle","daily")))
+
+
+
+
+# Format data into format for use by mcmc sampler ------------------------------
+
+source("Format_Data/FormatDspDat.R")
+
+idName <- "subjId"
+cycleName <- "cycle"
+cycleDayName <- "cycleDay"
+pregName <- "pregInd"
+intercourseName <- "intercourse"
+varInclNames <- list( baseline = c("age","bmi","gravid"),
+                      cycle = "cycleLen",
+                      daily = "lube" )
+
+dspDat <- makeDspDat(baseline, cycle, daily, idName, cycleName, cycleDayName, 
+                     pregName, intercourseName, varInclNames, fwLen=5)
+invisible( list2env(dspDat, envir=.GlobalEnv) )
+save(Y, X, id, U, file="Data/PracticeDat.RData")
+
+
+
+
+
 
