@@ -129,6 +129,9 @@ rm(list=setdiff(ls(), c("baseline","cycle","daily")))
 
 Maybe here we can provide some descriptive statistics for our simulated dataset
 
+```{r}
+mean(cycle$pregInd)
+```
 
 
 
