@@ -6,7 +6,7 @@
   if (Sys.info()[8] == "dpritch")
     setwd("/home/dpritch/Documents/Projects/Dunson Day Specific/Software")
   else
-    setwd("sam's working directory please change")
+    setwd("/Users/Sam/Documents/Sam/School/Graduate/Dave/DSP_Software/")
 }
 load("Data/PracticeDat.RData")
 

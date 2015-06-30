@@ -127,12 +127,17 @@ rm(list=setdiff(ls(), c("baseline","cycle","daily")))
 
 # Dataset characteristics
 
-Maybe here we can provide some descriptive statistics for our simulated dataset
+We can check some characteristics of the simulated dataset. In particular the proportion of cycles that result in a pregnancy can be computed with the following command.
 
 ```{r}
 mean(cycle$pregInd)
 ```
 
+Furthermore, the average number of cycles per individual can be computed.
+
+```{r}
+mean(table(cycle$subjId))
+```
 
 
 
