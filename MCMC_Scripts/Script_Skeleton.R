@@ -23,7 +23,7 @@ onen<-rep(1,n)
 ###Initial Values
 phi<-1
 g<-rep(1,H)
-b<-log(g)
+beta<-log(g)
 xi<-rep(1,n)
 
 ###Hyperparameters
@@ -65,7 +65,7 @@ rI1gammaT <- function(n,p,a,b,A){
 }
 
 ##Gamma Constant
-C <- function(a,b) {out<-b^a/gamma(a); return(out)}
+lC <- function(a,b) {out<-b*log(a)-lgamma(a); return(out)}
 
 ###MCMC Objects
 nsims<-10000
@@ -95,7 +95,7 @@ for (s in 1:nsims) {
 		if (y!=0) {
 			
 			#Sample z_ij (scalar Z_ij) from zero truncated poisson (https://stat.ethz.ch/pipermail/r-help/2005-May/070678.html)
-			mu <- xi[ID]*exp(u%*%b)
+			mu <- xi[ID]*exp(u%*%beta)
 			mean_pois <- as.numeric(x%*%mu)
 			unif <- runif(1)
 			tt <- -log(1-unif*(1-exp(mean_pois)))
@@ -136,19 +136,17 @@ for (s in 1:nsims) {
 			bh_t <- bh+sum(xi_i*prod_gamma)
 			
 			#ph_tilde
-			cons1 <- C(ah,bh)/C(ah_t,bh_t)
+			cons1 <- exp(lC(ah,bh)-lC(ah_t,bh_t)+(bh_t-bh))
 			cons2 <- (pgamma(Ah[2],ah_t,bh_t)-pgamma(Ah[1],ah_t,bh_t))/(pgamma(Ah[2],ah,bh)-pgamma(Ah[1],ah,bh))
-			cons <- cons1*cons2
-			num <- (ph*exp(-(bh_t-bh)))
-			den <- num+(1-ph)*cons
-			ph_t <- num/den
+			den<- cons1*cons2*(1-ph)+ph
+			ph_t <- ph/den
 		
 		#Sample from one-inflated gamma truncated to region Ah
 		g[h] <- rI1gammaT(1,ph_t,ah_t,bh_t,Ah)		
 	}
 	
 	##Update beta
-	b <- log(g)
+	beta <- log(g)
 	
 	##Write gamma to file
 	write(g,file=paste(output,"GAMMA.csv",sep=""),sep=",",ncolumns=H,append=TRUE)

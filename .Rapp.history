@@ -1,145 +1,648 @@
-rpois(1,T1)+1
-rpois(1,T1)+1
-rpois(1,T1)+1
-rpois(1,T1)+1
-rpois(1,T1)+1
-rpois(1,T1)+1
-rpois(1,T1)+1
-rpois(1,T1)+1
-rpois(1,T1)+1
-Sample z_ij (scalar Z_ij) from zero truncated poisson#
-			mu <- xi[ID]*exp(u%*%beta)#
-			mean_pois <- x%*%mu#
-			unif <- runif(1)#
-			tt <- -log(1-unif*(1-exp(mean_pois)))#
-			T1 <- mean_pois-tt#
-			z_ij <- rpois(1,T1)+1
-z_ij
-ns <- z_ij
-ns
-P <- as.numeric(x*mu/as.numeric(x%*%mu))
-P
-mean_pois
-mean_pois <- as.numeric(x%*%mu)#
-			unif <- runif(1)#
-			tt <- -log(1-unif*(1-exp(mean_pois)))#
-			T1 <- mean_pois-tt#
-			z_ij <- rpois(1,T1)+1
-z_ij
-x*mu/mean_pois
-P <- x*mu/mean_pois
-P
-rmult(z_ij,P)
-rmult(z_ij,P)
-rmult(z_ij,P)
-rmult(z_ij,P)
-rmult(z_ij,P)
-ns
-P
-nrow(P)
-ncol(P)
-Ys<- matrix(0,nrow(P),ncol(P))
-Ys
-sum(ns)>0
-ns
-(sum(ns)>0)
-[ns>0,1]
-Ys[ns>0,1]
-Ys
-if(sum(ns)>0)#
-    Ys[ns>0,1]<- rbinom(sum(ns>0),ns[ns>0],P[ns>0,1])#
-  ns<- ns-Ys[,1]
-Ys
-(sum(ns)>0)
-if(sum(ns)>0) Ys[ns>0,2]<- rbinom(sum(ns>0),ns[ns>0],P[ns>0,2]/(1-P[ns>0,1]))
-P
-P <- matrix(x*mu/mean_pois,nrow=1,ncol=K)
-P
-rmult(z_ij,P)
-rmult(z_ij,P)
-rmult(z_ij,P)
-rmult(z_ij,P)
-rmult(z_ij,P)
-rmult(z_ij,P)
-rmult(z_ij,P)
-rmult(z_ij,P)
-rmult(z_ij,P)
-rmult(z_ij,P)
-rmult(z_ij,P)
-rmult(z_ij,P)
-rmult(z_ij,P)
-rmult(z_ij,P)
-rmult(z_ij,P)
-rmult(z_ij,P)
-rmult(z_ij,P)
-rmult(z_ij,P)
-rmult(z_ij,P)
-rmult(z_ij,P)
-rmult(z_ij,P)
-z_ij
-rmult(z_ij,P)
-rmult(z_ij,P)
-rmult(z_ij,P)
-rmult(z_ij,P)
-rmult(z_ij,P)
-rmult(z_ij,P)
-rmult(z_ij,P)
-rmult(z_ij,P)
-Z[idcyc]<-rmult(z_ij,P)
-Z[idcyc]
-Z
-Sample Z_ij (vector Z_ij)#
-			ns <- z_ij#
-			P <- matrix(x*mu/mean_pois,nrow=1,ncol=K)#
-			Z[idcyc]<-rmult(ns,P)
-Sample Latent Variable Z#
-	Z<-numeric(length=N)#
-	for (i in 1:ncyc) {#
-		#Define data for individual i, cycle j#
-		idcyc<-(K*(i-1)+1):(i*K)#
-		u<-U[idcyc,]#
-		x<-X[idcyc]#
-		y<-Y[i]#
-		ID<-unique(id[idcyc])#
+var(reg1$alpha)
+xtable(out_alpha,digits=c(0,3,6,4,4))
+xtable(out_alpha,digits=c(0,4,6,4,4))
+par(mfcol=c(2,3))#
+traceplot(reg1$mu,main=expression(paste("Traceplot of ",mu)),ylab=expression(mu))#
+traceplot(reg1$sigma2,main=expression(paste("Traceplot of ",sigma^2)),ylab=expression(sigma^2))#
+traceplot(reg1$tau2,main=expression(paste("Traceplot of ",tau^2)),ylab=expression(tau^2))#
+traceplot(reg1$deviance,main=expression(paste("Traceplot of  Deviance")),ylab="Deviance")#
+traceplot(reg1$alpha,main=expression(paste("Traceplot of ",alpha)),ylab=expression(alpha))#
+traceplot(reg1$theta[,1],main=expression(paste("Traceplot of ",theta[1])),ylab=expression(theta[1]))
+par(mfcol=c(2,3))#
+traceplot(reg2$mu,main=expression(paste("Traceplot of ",mu)),ylab=expression(mu))#
+traceplot(reg2$sigma2,main=expression(paste("Traceplot of ",sigma^2)),ylab=expression(sigma^2))#
+traceplot(reg2$tau2,main=expression(paste("Traceplot of ",tau^2)),ylab=expression(tau^2))#
+traceplot(reg2deviance,main=expression(paste("Traceplot of  Deviance")),ylab="Deviance")#
+traceplot(reg2$alpha,main=expression(paste("Traceplot of ",alpha)),ylab=expression(alpha))#
+traceplot(reg2$theta[,1],main=expression(paste("Traceplot of ",theta[1])),ylab=expression(theta[1]))
+par(mfcol=c(2,3))#
+traceplot(reg3$mu,main=expression(paste("Traceplot of ",mu)),ylab=expression(mu))#
+traceplot(reg3$sigma2,main=expression(paste("Traceplot of ",sigma^2)),ylab=expression(sigma^2))#
+traceplot(reg3$tau2,main=expression(paste("Traceplot of ",tau^2)),ylab=expression(tau^2))#
+traceplot(reg3deviance,main=expression(paste("Traceplot of  Deviance")),ylab="Deviance")#
+traceplot(reg3$alpha,main=expression(paste("Traceplot of ",alpha)),ylab=expression(alpha))#
+traceplot(reg3$theta[,1],main=expression(paste("Traceplot of ",theta[1])),ylab=expression(theta[1]))
+par(mfcol=c(2,3))#
+traceplot(reg4$mu,main=expression(paste("Traceplot of ",mu)),ylab=expression(mu))#
+traceplot(reg4$sigma2,main=expression(paste("Traceplot of ",sigma^2)),ylab=expression(sigma^2))#
+traceplot(reg4$tau2,main=expression(paste("Traceplot of ",tau^2)),ylab=expression(tau^2))#
+traceplot(reg4deviance,main=expression(paste("Traceplot of  Deviance")),ylab="Deviance")#
+traceplot(reg4$alpha,main=expression(paste("Traceplot of ",alpha)),ylab=expression(alpha))#
+traceplot(reg4$theta[,1],main=expression(paste("Traceplot of ",theta[1])),ylab=expression(theta[1]))
+Alpha Traceplots#
+par(mfcol=c(2,2))#
+traceplot(reg1$alpha,main=expression(paste("Traceplot of ",alpha)),ylab=expression(alpha))#
+traceplot(reg2$alpha,main=expression(paste("Traceplot of ",alpha)),ylab=expression(alpha))#
+traceplot(reg3$alpha,main=expression(paste("Traceplot of ",alpha)),ylab=expression(alpha))#
+traceplot(reg4$alpha,main=expression(paste("Traceplot of ",alpha)),ylab=expression(alpha))
+par(mfcol=c(2,2))#
+traceplot(reg1$alpha,main=expression(paste("Traceplot of ",alpha,"(Improper/Cont)")),ylab=expression(alpha))#
+traceplot(reg2$alpha,main=expression(paste("Traceplot of ",alpha,"(Improper/Binary)")),ylab=expression(alpha))#
+traceplot(reg3$alpha,main=expression(paste("Traceplot of ",alpha,"(Proper/Cont)")),ylab=expression(alpha))#
+traceplot(reg4$alpha,main=expression(paste("Traceplot of ",alpha,"(Proper/Binary)")),ylab=expression(alpha))
+par(mfcol=c(2,2))#
+traceplot(reg1$alpha,main=expression(paste("Traceplot of ",alpha," (Improper/Cont)")),ylab=expression(alpha))#
+traceplot(reg2$alpha,main=expression(paste("Traceplot of ",alpha," (Improper/Binary)")),ylab=expression(alpha))#
+traceplot(reg3$alpha,main=expression(paste("Traceplot of ",alpha," (Proper/Cont)")),ylab=expression(alpha))#
+traceplot(reg4$alpha,main=expression(paste("Traceplot of ",alpha," (Proper/Binary)")),ylab=expression(alpha))#
 #
-		#Sample Z_ij#
-		if (y!=0) {#
-			#Sample z_ij (scalar Z_ij) from zero truncated poisson (https://stat.ethz.ch/pipermail/r-help/2005-May/070678.html)#
-			mu <- xi[ID]*exp(u%*%beta)#
-			mean_pois <- as.numeric(x%*%mu)#
-			unif <- runif(1)#
-			tt <- -log(1-unif*(1-exp(mean_pois)))#
-			T1 <- mean_pois-tt#
-			z_ij <- rpois(1,T1)+1#
-			#Sample Z_ij (vector Z_ij)#
-			ns <- z_ij#
-			P <- matrix(x*mu/mean_pois,nrow=1,ncol=K)#
-			Z[idcyc]<-rmult(ns,P)#
-		}#
-	}
-Z
-cbind(Z,X)
-H
-a<-rep(3,H)#
-b<-rep(1,H)#
-p<-rep(0.5,H)
-A<-matrix(nrow=H,ncol=2)
-A
-A[,2]<-rep(Inf,H)
-A[,1]<-rep(0,H)
-A
-A[h,]
-h
-h<-1
-Set hyperparameters#
-		ah<-a[h]#
-		bh<-b[h]#
-		ph<-p[h]#
-		Ah<-A[h,]
-ah
-bh
-ph
-Ah
+###Create Posterior Tables
+Alpha Traceplots#
+pdf("/Users/Sam/Documents/Sam/School/Dissertation/Models/Boundary\ Models/CAR_Dissimilarity/Output_degree/ID109ELF1/traceplots.pdf")#
+par(mfcol=c(2,2))#
+traceplot(reg1$alpha,main=expression(paste("Traceplot of ",alpha," (Improper/Cont)")),ylab=expression(alpha))#
+traceplot(reg2$alpha,main=expression(paste("Traceplot of ",alpha," (Improper/Binary)")),ylab=expression(alpha))#
+traceplot(reg3$alpha,main=expression(paste("Traceplot of ",alpha," (Proper/Cont)")),ylab=expression(alpha))#
+traceplot(reg4$alpha,main=expression(paste("Traceplot of ",alpha," (Proper/Binary)")),ylab=expression(alpha))#
+dev.off()
+pdf("/Users/Sam/Documents/Sam/School/Dissertation/Models/Boundary\ Models/CAR_Dissimilarity/Output_degree/ID109ELF1/traceplots.pdf")
+par(mfcol=c(2,2))#
+traceplot(reg1$alpha,main=expression(paste("Traceplot of ",alpha," (Improper/Cont)")),ylab=expression(alpha))#
+traceplot(reg2$alpha,main=expression(paste("Traceplot of ",alpha," (Improper/Binary)")),ylab=expression(alpha))#
+traceplot(reg3$alpha,main=expression(paste("Traceplot of ",alpha," (Proper/Cont)")),ylab=expression(alpha))#
+traceplot(reg4$alpha,main=expression(paste("Traceplot of ",alpha," (Proper/Binary)")),ylab=expression(alpha))#
+dev.off()
+Create Posterior Alpha Table#
+out_alpha<-rbind(c(mean(reg1$alpha),var(reg1$alpha),quantile(reg1$alpha,probs=c(0.025,0.975))),c(mean(reg2$alpha),var(reg2$alpha),quantile(reg2$alpha,probs=c(0.025,0.975))),c(mean(reg3$alpha),var(reg3$alpha),quantile(reg3$alpha,probs=c(0.025,0.975))),c(mean(reg4$alpha),var(reg4$alpha),quantile(reg4$alpha,probs=c(0.025,0.975))))#
+colnames(out_alpha)<-c("Mean","Variance","2.5%","97.5%")#
+rownames(out_alpha)<-c("Improper/Cont","Improper/Binary","Proper/Cont","Proper/Binary")#
+xtable(out_alpha,digits=c(0,4,6,4,4))
+xtable(out_alpha,digits=c(0,4,7,4,4))
+source("/Users/Sam/Documents/Sam/School/Dissertation/Models/Likelihoods/Glaucoma_R_Functions/plot_car.R")#
+ppd<-apply(reg1$ppd,2,mean)#
+plot.car(Y1=Y,Y2=ppd,main="CAR Dissimilarity Model \n(ID=109, Eye=L, Field=1)",label="Observed",label2="Predicted",cont=TRUE,bins=100)#
+ppd<-apply(reg2$ppd,2,mean)#
+plot.car(Y1=Y,Y2=ppd,main="CAR Dissimilarity Model \n(ID=109, Eye=L, Field=1)",label="Observed",label2="Predicted",cont=TRUE,bins=100)#
+ppd<-apply(reg3$ppd,2,mean)#
+plot.car(Y1=Y,Y2=ppd,main="CAR Dissimilarity Model \n(ID=109, Eye=L, Field=1)",label="Observed",label2="Predicted",cont=TRUE,bins=100)#
+ppd<-apply(reg4$ppd,2,mean)#
+plot.car(Y1=Y,Y2=ppd,main="CAR Dissimilarity Model \n(ID=109, Eye=L, Field=1)",label="Observed",label2="Predicted",cont=TRUE,bins=100)
+Plot Adjacency Probabilities#
+source("/Users/Sam/Documents/Sam/School/Dissertation/Models/Likelihoods/Glaucoma_R_Functions/plot_boundary.R")#
+l<-function(x) {o<-2*(1-(x));return(o)}#
+pdf("/Users/Sam/Documents/Sam/School/Dissertation/Models/Boundary\ Models/CAR_Dissimilarity/Output_degree/ID109ELF1/boundary1.pdf")#
+boundary<-reg1$boundary#
+plot.boundary(boundary,main="Plot of Posterior Neighborhood\n Boundary Probabilites",main.sub="ID=109, Eye=Left, Field=1",col.grid="gray",inv=FALSE,func=l)#
+dev.off()#
+pdf("/Users/Sam/Documents/Sam/School/Dissertation/Models/Boundary\ Models/CAR_Dissimilarity/Output_degree/ID109ELF1/boundary2.pdf")#
+boundary<-reg2$boundary#
+plot.boundary(boundary,main="Plot of Posterior Neighborhood\n Boundary Probabilites",main.sub="ID=109, Eye=Left, Field=1",col.grid="gray",inv=FALSE,func=l)#
+dev.off()#
+pdf("/Users/Sam/Documents/Sam/School/Dissertation/Models/Boundary\ Models/CAR_Dissimilarity/Output_degree/ID109ELF1/boundary3.pdf")#
+boundary<-reg3$boundary#
+plot.boundary(boundary,main="Plot of Posterior Neighborhood\n Boundary Probabilites",main.sub="ID=109, Eye=Left, Field=1",col.grid="gray",inv=FALSE,func=l)#
+dev.off()#
+pdf("/Users/Sam/Documents/Sam/School/Dissertation/Models/Boundary\ Models/CAR_Dissimilarity/Output_degree/ID109ELF1/boundary4.pdf")#
+boundary<-reg4$boundary#
+plot.boundary(boundary,main="Plot of Posterior Neighborhood\n Boundary Probabilites",main.sub="ID=109, Eye=Left, Field=1",col.grid="gray",inv=FALSE,func=l)#
+dev.off()
+Plot Adjacency Probabilities#
+source("/Users/Sam/Documents/Sam/School/Dissertation/Models/Likelihoods/Glaucoma_R_Functions/plot_boundary.R")#
+l<-function(x) {o<-1/(x);return(o)}#
+pdf("/Users/Sam/Documents/Sam/School/Dissertation/Models/Boundary\ Models/CAR_Dissimilarity/Output_degree/ID109ELF1/boundary1.pdf")#
+boundary<-reg1$boundary#
+plot.boundary(boundary,main="Plot of Posterior Neighborhood\n Boundary Probabilites",main.sub="ID=109, Eye=Left, Field=1",col.grid="gray",inv=FALSE,func=l)#
+dev.off()#
+pdf("/Users/Sam/Documents/Sam/School/Dissertation/Models/Boundary\ Models/CAR_Dissimilarity/Output_degree/ID109ELF1/boundary2.pdf")#
+boundary<-reg2$boundary#
+plot.boundary(boundary,main="Plot of Posterior Neighborhood\n Boundary Probabilites",main.sub="ID=109, Eye=Left, Field=1",col.grid="gray",inv=FALSE,func=l)#
+dev.off()#
+pdf("/Users/Sam/Documents/Sam/School/Dissertation/Models/Boundary\ Models/CAR_Dissimilarity/Output_degree/ID109ELF1/boundary3.pdf")#
+boundary<-reg3$boundary#
+plot.boundary(boundary,main="Plot of Posterior Neighborhood\n Boundary Probabilites",main.sub="ID=109, Eye=Left, Field=1",col.grid="gray",inv=FALSE,func=l)#
+dev.off()#
+pdf("/Users/Sam/Documents/Sam/School/Dissertation/Models/Boundary\ Models/CAR_Dissimilarity/Output_degree/ID109ELF1/boundary4.pdf")#
+boundary<-reg4$boundary#
+plot.boundary(boundary,main="Plot of Posterior Neighborhood\n Boundary Probabilites",main.sub="ID=109, Eye=Left, Field=1",col.grid="gray",inv=FALSE,func=l)#
+dev.off()
+Plot Adjacency Probabilities#
+source("/Users/Sam/Documents/Sam/School/Dissertation/Models/Likelihoods/Glaucoma_R_Functions/plot_boundary.R")#
+l<-function(x) {o<-1/(x);return(o)}#
+pdf("/Users/Sam/Documents/Sam/School/Dissertation/Models/Boundary\ Models/CAR_Dissimilarity/Output_degree/ID109ELF1/boundary1.pdf")#
+boundary<-reg1$boundary#
+plot.boundary(boundary,main="Plot of Posterior Neighborhood\n Boundary Probabilites\n (Improper/Cont)",main.sub="ID=109, Eye=Left, Field=1",col.grid="gray",inv=FALSE,func=l)#
+dev.off()#
+pdf("/Users/Sam/Documents/Sam/School/Dissertation/Models/Boundary\ Models/CAR_Dissimilarity/Output_degree/ID109ELF1/boundary2.pdf")#
+boundary<-reg2$boundary#
+plot.boundary(boundary,main="Plot of Posterior Neighborhood\n Boundary Probabilites\n (Improper/Binary)",main.sub="ID=109, Eye=Left, Field=1",col.grid="gray",inv=FALSE,func=l)#
+dev.off()#
+pdf("/Users/Sam/Documents/Sam/School/Dissertation/Models/Boundary\ Models/CAR_Dissimilarity/Output_degree/ID109ELF1/boundary3.pdf")#
+boundary<-reg3$boundary#
+plot.boundary(boundary,main="Plot of Posterior Neighborhood\n Boundary Probabilites\n (Proper/Cont)",main.sub="ID=109, Eye=Left, Field=1",col.grid="gray",inv=FALSE,func=l)#
+dev.off()#
+pdf("/Users/Sam/Documents/Sam/School/Dissertation/Models/Boundary\ Models/CAR_Dissimilarity/Output_degree/ID109ELF1/boundary4.pdf")#
+boundary<-reg4$boundary#
+plot.boundary(boundary,main="Plot of Posterior Neighborhood\n Boundary Probabilites\n (Proper/Binary)",main.sub="ID=109, Eye=Left, Field=1",col.grid="gray",inv=FALSE,func=l)#
+dev.off()
+source("/Users/Sam/Documents/Sam/School/Dissertation/Models/Likelihoods/Glaucoma_R_Functions/plot_boundary.R")#
+l<-function(x) {o<-2*(1-x);return(o)}#
+pdf("/Users/Sam/Documents/Sam/School/Dissertation/Models/Boundary\ Models/CAR_Dissimilarity/Output_degree/ID109ELF1/boundary1.pdf")#
+boundary<-reg1$boundary#
+plot.boundary(boundary,main="Plot of Posterior Neighborhood\n Boundary Probabilites\n (Improper/Cont)",main.sub="ID=109, Eye=Left, Field=1",col.grid="gray",inv=FALSE,func=l)#
+dev.off()#
+pdf("/Users/Sam/Documents/Sam/School/Dissertation/Models/Boundary\ Models/CAR_Dissimilarity/Output_degree/ID109ELF1/boundary2.pdf")#
+boundary<-reg2$boundary#
+plot.boundary(boundary,main="Plot of Posterior Neighborhood\n Boundary Probabilites\n (Improper/Binary)",main.sub="ID=109, Eye=Left, Field=1",col.grid="gray",inv=FALSE,func=l)#
+dev.off()#
+pdf("/Users/Sam/Documents/Sam/School/Dissertation/Models/Boundary\ Models/CAR_Dissimilarity/Output_degree/ID109ELF1/boundary3.pdf")#
+boundary<-reg3$boundary#
+plot.boundary(boundary,main="Plot of Posterior Neighborhood\n Boundary Probabilites\n (Proper/Cont)",main.sub="ID=109, Eye=Left, Field=1",col.grid="gray",inv=FALSE,func=l)#
+dev.off()#
+pdf("/Users/Sam/Documents/Sam/School/Dissertation/Models/Boundary\ Models/CAR_Dissimilarity/Output_degree/ID109ELF1/boundary4.pdf")#
+boundary<-reg4$boundary#
+plot.boundary(boundary,main="Plot of Posterior Neighborhood\n Boundary Probabilites\n (Proper/Binary)",main.sub="ID=109, Eye=Left, Field=1",col.grid="gray",inv=FALSE,func=l)#
+dev.off()
+source("/Users/Sam/Documents/Sam/School/Dissertation/Models/Likelihoods/Glaucoma_R_Functions/plot_boundary.R")#
+l<-function(x) {o<-5*(1-x);return(o)}#
+pdf("/Users/Sam/Documents/Sam/School/Dissertation/Models/Boundary\ Models/CAR_Dissimilarity/Output_degree/ID109ELF1/boundary1.pdf")#
+boundary<-reg1$boundary#
+plot.boundary(boundary,main="Plot of Posterior Neighborhood\n Boundary Probabilites\n (Improper/Cont)",main.sub="ID=109, Eye=Left, Field=1",col.grid="gray",inv=FALSE,func=l)#
+dev.off()#
+pdf("/Users/Sam/Documents/Sam/School/Dissertation/Models/Boundary\ Models/CAR_Dissimilarity/Output_degree/ID109ELF1/boundary2.pdf")#
+boundary<-reg2$boundary#
+plot.boundary(boundary,main="Plot of Posterior Neighborhood\n Boundary Probabilites\n (Improper/Binary)",main.sub="ID=109, Eye=Left, Field=1",col.grid="gray",inv=FALSE,func=l)#
+dev.off()#
+pdf("/Users/Sam/Documents/Sam/School/Dissertation/Models/Boundary\ Models/CAR_Dissimilarity/Output_degree/ID109ELF1/boundary3.pdf")#
+boundary<-reg3$boundary#
+plot.boundary(boundary,main="Plot of Posterior Neighborhood\n Boundary Probabilites\n (Proper/Cont)",main.sub="ID=109, Eye=Left, Field=1",col.grid="gray",inv=FALSE,func=l)#
+dev.off()#
+pdf("/Users/Sam/Documents/Sam/School/Dissertation/Models/Boundary\ Models/CAR_Dissimilarity/Output_degree/ID109ELF1/boundary4.pdf")#
+boundary<-reg4$boundary#
+plot.boundary(boundary,main="Plot of Posterior Neighborhood\n Boundary Probabilites\n (Proper/Binary)",main.sub="ID=109, Eye=Left, Field=1",col.grid="gray",inv=FALSE,func=l)#
+dev.off()
+out_deviance<-rbind(c(mean(reg1$deviance),var(reg1$deviance),quantile(reg1$deviance,probs=c(0.025,0.975))),c(mean(reg2$deviance),var(reg2$deviance),quantile(reg2$deviance,probs=c(0.025,0.975))),c(mean(reg3$deviance),var(reg3$deviance),quantile(reg3$deviance,probs=c(0.025,0.975))),c(mean(reg4$deviance),var(reg4$deviance),quantile(reg4$deviance,probs=c(0.025,0.975))))#
+colnames(out_deviance)<-c("Mean","Variance","2.5%","97.5%")#
+rownames(out_deviance)<-c("Improper/Cont","Improper/Binary","Proper/Cont","Proper/Binary")
+out_deviance
+xtable(out_deviance,digits=c(0,4,7,4,4))
+xtable(out_deviance,digits=c(0,2,2,2,2))
+Read in Data for ID=109, Eye=Left, Field=1#
+glaucoma<-read.csv("/Users/Sam/Documents/Sam/School/Dissertation/Data/Brigid\ Data/all_josh.csv")#
+dat<-glaucoma[(glaucoma$patid==109)&(glaucoma$eye=="L")&(glaucoma$field==1),]#
+#
+###Attach Optic Nerve Degree Dissimilarity#
+source("/Users/Sam/Documents/Sam/School/Dissertation/Models/Likelihoods/Glaucoma_R_Functions/opticnervedegree.R")#
+dat<-cbind(dat,degree)#
+#
+###Define Data#
+Y<-dat$sens_raw#
+D<-degree#
+#
+###Read in Adjacency Matrix#
+source("/Users/Sam/Documents/Sam/School/Dissertation/Models/Likelihoods/Glaucoma_R_Functions/adjacency.R")#
+W<-adj.mat(Adj)#
+#
+###Source CAR Dissimilarity Model Code#
+# source("/Users/Sam/Documents/Sam/School/Dissertation/Models/Likelihoods/Glaucoma_R_Functions/car_dis.R") # indicator improper #
+# source("/Users/Sam/Documents/Sam/School/Dissertation/Models/Likelihoods/Glaucoma_R_Functions/car_dissimilarity.R") #degree/improper#
+source("/Users/Sam/Documents/Sam/School/Dissertation/Models/Likelihoods/Glaucoma_R_Functions/car_diss.R") # degree proper/improper
+load("/Users/Sam/Documents/Sam/School/Dissertation/Models/Boundary\ Models/CAR_Dissimilarity/Output_degree/ID109ELF1/reg1.RData")#
+load("/Users/Sam/Documents/Sam/School/Dissertation/Models/Boundary\ Models/CAR_Dissimilarity/Output_degree/ID109ELF1/reg2.RData")#
+load("/Users/Sam/Documents/Sam/School/Dissertation/Models/Boundary\ Models/CAR_Dissimilarity/Output_degree/ID109ELF1/reg3.RData")#
+load("/Users/Sam/Documents/Sam/School/Dissertation/Models/Boundary\ Models/CAR_Dissimilarity/Output_degree/ID109ELF1/reg4.RData")
+reg1$deviance
+mean_deviance<-mean(reg1$deviance)
+apply(reg1$theta,2,mean)
+mean_theta<-apply(reg1$theta,2,mean)
+mean_mu<-mean(reg1$mu)
+mean_mu
+mu_dev<-mean_mu*onen+mean_theta
+mean_deviance<-mean(reg1$deviance)#
+mean_theta<-apply(reg1$theta,2,mean)#
+mean_mu<-mean(reg1$mu)#
+#
+mu_dev<-mean_mu*onen+mean_theta
+mu_dev
+mean_mu*onen+mean_theta
+onen<-rep(1,length(mean_theta))
+onen
+mu_dev<-mean_mu*onen+mean_theta
+mu_dev
+Y_star
+tobit
+which(Y==0)
+Y
+Y_star<-Y[-c(26,35)]
+Y_star<-Y[-c(26,35),]
+Y_star<-Y[-c(26,35)]
+Y_star
+Y
+Y_star
+tobit<-Y_star==0
+tobit
+piece1<--2*sum(dnorm(Y_star[!tobit],mu_dev[!tobit],sqrt(sigma2),log=TRUE))
+mean_sigma2<-mean(reg1$sigma2)
+piece1<--2*sum(dnorm(Y_star[!tobit],mu_dev[!tobit],sqrt(sigma2),log=TRUE))
+piece1<--2*sum(dnorm(Y_star[!tobit],mu_dev[!tobit],sqrt(mean_sigma2),log=TRUE))
+piece2<--2*sum(pnorm(mu_dev[tobit]/sqrt(mean_sigma2),0,1,lower.tail=FALSE,log.p=TRUE))
+dev<-piece1+piece2
+dev
+Read in Data for ID=109, Eye=Left, Field=1#
+glaucoma<-read.csv("/Users/Sam/Documents/Sam/School/Dissertation/Data/Brigid\ Data/all_josh.csv")#
+dat<-glaucoma[(glaucoma$patid==109)&(glaucoma$eye=="L")&(glaucoma$field==1),]#
+#
+###Attach Optic Nerve Degree Dissimilarity#
+source("/Users/Sam/Documents/Sam/School/Dissertation/Models/Likelihoods/Glaucoma_R_Functions/opticnervedegree.R")#
+dat<-cbind(dat,degree)#
+#
+###Define Data#
+Y<-dat$sens_raw#
+D<-degree
+Compute Diagnositcs#
+reg<-reg1#
+mean_deviance<-mean(reg$deviance)#
+mean_theta<-apply(reg$theta,2,mean)#
+mean_mu<-mean(reg$mu)#
+onen<-rep(1,length(mean_theta))#
+mu_dev<-mean_mu*onen+mean_theta#
+mean_sigma2<-mean(reg$sigma2)#
+which(Y==0)#
+Y_star<-Y[-c(26,35)]#
+tobit<-Y_star==0#
+piece1<--2*sum(dnorm(Y_star[!tobit],mu_dev[!tobit],sqrt(mean_sigma2),log=TRUE))#
+piece2<--2*sum(pnorm(mu_dev[tobit]/sqrt(mean_sigma2),0,1,lower.tail=FALSE,log.p=TRUE))	#
+dev<-piece1+piece2
+dev
+REG<-list(reg1,reg2,reg3,reg4)
+REG<-list(reg1,reg2,reg3,reg4)#
+###Compute Diagnositcs#
+out<-NULL#
+for (i in 1:4) {#
+reg<-REG[[i]]#
+mean_deviance<-mean(reg$deviance)#
+mean_theta<-apply(reg$theta,2,mean)#
+mean_mu<-mean(reg$mu)#
+onen<-rep(1,length(mean_theta))#
+mu_dev<-mean_mu*onen+mean_theta#
+mean_sigma2<-mean(reg$sigma2)#
+which(Y==0)#
+Y_star<-Y[-c(26,35)]#
+tobit<-Y_star==0#
+piece1<--2*sum(dnorm(Y_star[!tobit],mu_dev[!tobit],sqrt(mean_sigma2),log=TRUE))#
+piece2<--2*sum(pnorm(mu_dev[tobit]/sqrt(mean_sigma2),0,1,lower.tail=FALSE,log.p=TRUE))	#
+dev<-piece1+piece2	#
+dev<-c(out,dev)#
+}
+dev
+REG<-list(reg1,reg2,reg3,reg4)#
+###Compute Diagnositcs#
+out<-numeric(length=4)#
+for (i in 1:4) {#
+reg<-REG[[i]]#
+mean_deviance<-mean(reg$deviance)#
+mean_theta<-apply(reg$theta,2,mean)#
+mean_mu<-mean(reg$mu)#
+onen<-rep(1,length(mean_theta))#
+mu_dev<-mean_mu*onen+mean_theta#
+mean_sigma2<-mean(reg$sigma2)#
+which(Y==0)#
+Y_star<-Y[-c(26,35)]#
+tobit<-Y_star==0#
+piece1<--2*sum(dnorm(Y_star[!tobit],mu_dev[!tobit],sqrt(mean_sigma2),log=TRUE))#
+piece2<--2*sum(pnorm(mu_dev[tobit]/sqrt(mean_sigma2),0,1,lower.tail=FALSE,log.p=TRUE))	#
+dev<-piece1+piece2	#
+out[i]<-dev#
+}
+out
+REG<-list(reg1,reg2,reg3,reg4)#
+###Compute Diagnositcs#
+out<-numeric(length=4)#
+for (i in 1:4) {#
+reg<-REG[[i]]#
+mean_deviance<-mean(reg$deviance)#
+mean_theta<-apply(reg$theta,2,mean)#
+mean_mu<-mean(reg$mu)#
+onen<-rep(1,length(mean_theta))#
+mu_dev<-mean_mu*onen+mean_theta#
+mean_sigma2<-mean(reg$sigma2)#
+which(Y==0)#
+Y_star<-Y[-c(26,35)]#
+tobit<-Y_star==0#
+piece1<--2*sum(dnorm(Y_star[!tobit],mu_dev[!tobit],sqrt(mean_sigma2),log=TRUE))#
+piece2<--2*sum(pnorm(mu_dev[tobit]/sqrt(mean_sigma2),0,1,lower.tail=FALSE,log.p=TRUE))	#
+dev<-piece1+piece2	#
+out[i]<-dev#
+#
+DIC<-2*mean_deviance-dev#
+print(DIC)#
+}
+tobit
+!tobit
+tobit
+Y_star[!tobit]
+mu_dev[!tobit]
+Y_star[!tobit]/10
+REG<-list(reg1,reg2,reg3,reg4)#
+###Compute Diagnositcs#
+out<-numeric(length=4)#
+for (i in 1:4) {#
+reg<-REG[[i]]#
+mean_deviance<-mean(reg$deviance)#
+mean_theta<-apply(reg$theta,2,mean)#
+mean_mu<-mean(reg$mu)#
+onen<-rep(1,length(mean_theta))#
+mu_dev<-mean_mu*onen+mean_theta#
+mean_sigma2<-mean(reg$sigma2)#
+which(Y==0)#
+Y_star<-Y[-c(26,35)]#
+tobit<-Y_star==0#
+piece1<--2*sum(dnorm(Y_star[!tobit]/10,mu_dev[!tobit],sqrt(mean_sigma2),log=TRUE))#
+piece2<--2*sum(pnorm(mu_dev[tobit]/sqrt(mean_sigma2),0,1,lower.tail=FALSE,log.p=TRUE))	#
+dev<-piece1+piece2	#
+out[i]<-dev#
+#
+DIC<-2*mean_deviance-dev#
+print(DIC)#
+}
+out
+piece2
+out
+mean_deviance
+REG<-list(reg1,reg2,reg3,reg4)#
+###Compute Diagnositcs#
+dhat<-dbar<-pd<-numeric(length=4)#
+for (i in 1:4) {#
+reg<-REG[[i]]#
+mean_deviance<-mean(reg$deviance)#
+mean_theta<-apply(reg$theta,2,mean)#
+mean_mu<-mean(reg$mu)#
+onen<-rep(1,length(mean_theta))#
+mu_dev<-mean_mu*onen+mean_theta#
+mean_sigma2<-mean(reg$sigma2)#
+which(Y==0)#
+Y_star<-Y[-c(26,35)]#
+tobit<-Y_star==0#
+piece1<--2*sum(dnorm(Y_star[!tobit]/10,mu_dev[!tobit],sqrt(mean_sigma2),log=TRUE))#
+piece2<--2*sum(pnorm(mu_dev[tobit]/sqrt(mean_sigma2),0,1,lower.tail=FALSE,log.p=TRUE))	#
+dev<-piece1+piece2	#
+dhat[i]<-dev#
+pd[i]<-mean_deviance-dev#
+dbar[i]<-mean_deviance#
+}
+pd
+dbar
+dbar+pd
+DIC<-dbar+pd
+DIC
+postpred_var<-apply(ppd,2,var)
+Compute Diagnositcs#
+REG<-list(reg1,reg2,reg3,reg4)#
+dhat<-dbar<-pd<-DIC<-P<-G<-D<-numeric(length=4)#
+for (i in 1:4) {#
+reg<-REG[[i]]#
+#
+##DIC#
+mean_deviance<-mean(reg$deviance)#
+mean_theta<-apply(reg$theta,2,mean)#
+mean_mu<-mean(reg$mu)#
+onen<-rep(1,length(mean_theta))#
+mu_dev<-mean_mu*onen+mean_theta#
+mean_sigma2<-mean(reg$sigma2)#
+which(Y==0)#
+Y_star<-Y[-c(26,35)]#
+tobit<-Y_star==0#
+piece1<--2*sum(dnorm(Y_star[!tobit]/10,mu_dev[!tobit],sqrt(mean_sigma2),log=TRUE))#
+piece2<--2*sum(pnorm(mu_dev[tobit]/sqrt(mean_sigma2),0,1,lower.tail=FALSE,log.p=TRUE))	#need to add scale for 10#
+dev<-piece1+piece2	#
+dhat[i]<-dev#
+pd[i]<-mean_deviance-dev#
+dbar[i]<-mean_deviance#
+DIC[i]<-dbar[i]+pd[i]#
+#
+##D_inf, P, G#
+postpred<-reg$ppd#
+postpred_var<-apply(postpred,2,var)#
+postpred_mean<-apply(postpred,2,mean)#
+P[i]<-sum(postpred_var)#
+G[i]<-sum((postpred_mean-Y)^2)#
+D[i]<-G+P#
+#
+}
+i<-1
+reg<-REG[[i]]#
+#
+##DIC#
+mean_deviance<-mean(reg$deviance)#
+mean_theta<-apply(reg$theta,2,mean)#
+mean_mu<-mean(reg$mu)#
+onen<-rep(1,length(mean_theta))#
+mu_dev<-mean_mu*onen+mean_theta#
+mean_sigma2<-mean(reg$sigma2)#
+which(Y==0)#
+Y_star<-Y[-c(26,35)]#
+tobit<-Y_star==0#
+piece1<--2*sum(dnorm(Y_star[!tobit]/10,mu_dev[!tobit],sqrt(mean_sigma2),log=TRUE))#
+piece2<--2*sum(pnorm(mu_dev[tobit]/sqrt(mean_sigma2),0,1,lower.tail=FALSE,log.p=TRUE))	#need to add scale for 10#
+dev<-piece1+piece2	#
+dhat[i]<-dev#
+pd[i]<-mean_deviance-dev#
+dbar[i]<-mean_deviance#
+DIC[i]<-dbar[i]+pd[i]
+DIC
+postpred<-reg$ppd
+postpred_var<-apply(postpred,2,var)
+postpred_mean<-apply(postpred,2,mean)
+postpred_var
+postpred_mean<-apply(postpred,2,mean)
+postpred_mean
+sum(postpred_var)
+P[i]<-sum(postpred_var)
+P
+G[i]<-sum((postpred_mean-Y)^2)
+G[i]<-sum((postpred_mean-Y_star)^2)
+D[i]<-G+P
+G+P
+postpred_var
+sum(postpred_var)
+sum((postpred_mean-Y_star)^2)
+Compute Diagnositcs#
+REG<-list(reg1,reg2,reg3,reg4)#
+dhat<-dbar<-pd<-DIC<-P<-G<-D<-numeric(length=4)#
+for (i in 1:4) {#
+reg<-REG[[i]]#
+#
+##DIC#
+mean_deviance<-mean(reg$deviance)#
+mean_theta<-apply(reg$theta,2,mean)#
+mean_mu<-mean(reg$mu)#
+onen<-rep(1,length(mean_theta))#
+mu_dev<-mean_mu*onen+mean_theta#
+mean_sigma2<-mean(reg$sigma2)#
+which(Y==0)#
+Y_star<-Y[-c(26,35)]#
+tobit<-Y_star==0#
+piece1<--2*sum(dnorm(Y_star[!tobit]/10,mu_dev[!tobit],sqrt(mean_sigma2),log=TRUE))#
+piece2<--2*sum(pnorm(mu_dev[tobit]/sqrt(mean_sigma2),0,1,lower.tail=FALSE,log.p=TRUE))	#need to add scale for 10#
+dev<-piece1+piece2	#
+dhat[i]<-dev#
+pd[i]<-mean_deviance-dev#
+dbar[i]<-mean_deviance#
+DIC[i]<-dbar[i]+pd[i]#
+#
+##D_inf, P, G#
+postpred<-reg$ppd#
+postpred_var<-apply(postpred,2,var)#
+postpred_mean<-apply(postpred,2,mean)#
+P[i]<-sum(postpred_var)#
+G[i]<-sum((postpred_mean-Y_star)^2)#
+D[i]<-G[i]+P[i]#
+#
+}
+cbind(DIC,pd,P,G,D)
+out<-cbind(DIC,pd,P,G,D)
+Compute Diagnositcs#
+REG<-list(reg1,reg2,reg3,reg4)#
+dhat<-dbar<-pD<-DIC<-P<-G<-D<-numeric(length=4)#
+for (i in 1:4) {#
+reg<-REG[[i]]#
+#
+##DIC#
+mean_deviance<-mean(reg$deviance)#
+mean_theta<-apply(reg$theta,2,mean)#
+mean_mu<-mean(reg$mu)#
+onen<-rep(1,length(mean_theta))#
+mu_dev<-mean_mu*onen+mean_theta#
+mean_sigma2<-mean(reg$sigma2)#
+which(Y==0)#
+Y_star<-Y[-c(26,35)]#
+tobit<-Y_star==0#
+piece1<--2*sum(dnorm(Y_star[!tobit]/10,mu_dev[!tobit],sqrt(mean_sigma2),log=TRUE))#
+piece2<--2*sum(pnorm(mu_dev[tobit]/sqrt(mean_sigma2),0,1,lower.tail=FALSE,log.p=TRUE))	#need to add scale for 10#
+dev<-piece1+piece2	#
+dhat[i]<-dev#
+pD[i]<-mean_deviance-dev#
+dbar[i]<-mean_deviance#
+DIC[i]<-dbar[i]+pD[i]#
+#
+##D_inf, P, G#
+postpred<-reg$ppd#
+postpred_var<-apply(postpred,2,var)#
+postpred_mean<-apply(postpred,2,mean)#
+P[i]<-sum(postpred_var)#
+G[i]<-sum((postpred_mean-Y_star)^2)#
+D[i]<-G[i]+P[i]#
+#
+}#
+#
+out<-cbind(DIC,pD,P,G,D)
+out
+rownames(out)<-c("Improper/Cont","Improper/Binary","Proper/Cont","Proper/Binary")
+out
+xtable(out)
+library(xtable)
+xtable(out)
+install.packages("rmarkdown")
+ls()
+Read in Data for ID=109, Eye=Left, Field=1#
+# glaucoma<-read.csv("/Users/Sam/Documents/Sam/School/Dissertation/Data/Brigid\ Data/all_josh.csv")#
+#
+###Read in Adjacency Matrix#
+source("/Users/Sam/Documents/Sam/School/Dissertation/Models/Likelihoods/Glaucoma_R_Functions/adjacency.R")#
+W<-adj.mat(Adj)#
+#
+###Source CAR Dissimilarity Model Code#
+source("/Users/Sam/Documents/Sam/School/Dissertation/Models/Likelihoods/Glaucoma_R_Functions/car_dissimilarity.R")#
+#
+###Attach Optic Nerve Degree Dissimilarity#
+source("/Users/Sam/Documents/Sam/School/Dissertation/Models/Likelihoods/Glaucoma_R_Functions/opticnervedegree.R")#
+D<-degree
+Y<-rnorm(54,25,3)
+Y
+floor(rnorm(54,25,3))
+Y<-floor(rnorm(54,25,3))
+set.seed(54)#
+Y<-floor(rnorm(54,25,3))#
+reg<-car_dis(nsims=5000,Y=Y,D=D,inits=list(mu=3,sigma2=1,tau2=1,alpha=0.5),hypers=list(mu=c(10e4),sigma2=c(3,1),tau2=c(3,1),alpha=10),metrop=list(delta=0.03),W=W,epsilon=0.001,scale=10,burn_in=0.5,thin=1000,output="/Users/Sam/Documents/Sam/School/Dissertation/Models/Boundary\ Models/CAR_Dissimilarity/Output_iid/")
+reg<-reg1
+MCMC Checks: Traceplots#
+library(coda)#
+par(mfcol=c(2,3))#
+traceplot(reg$mu,main=expression(paste("Traceplot of ",mu)),ylab=expression(mu))#
+traceplot(reg$sigma2,main=expression(paste("Traceplot of ",sigma^2)),ylab=expression(sigma^2))#
+traceplot(reg$tau2,main=expression(paste("Traceplot of ",tau^2)),ylab=expression(tau^2))#
+traceplot(reg$deviance,main=expression(paste("Traceplot of  Deviance")),ylab="Deviance")#
+traceplot(reg$alpha,main=expression(paste("Traceplot of ",alpha)),ylab=expression(alpha))#
+traceplot(reg$theta[,1],main=expression(paste("Traceplot of ",theta[1])),ylab=expression(theta[1]))
+source("/Users/Sam/Documents/Sam/School/Dissertation/Models/Likelihoods/Glaucoma_R_Functions/plot_boundary.R")#
+l<-function(x) {o<-5*(1-x);return(o)}#
+# pdf("/Users/Sam/Documents/Sam/School/Dissertation/Models/Boundary\ Models/CAR_Dissimilarity/Output_degree/ID109ELF1/boundary1.pdf")#
+boundary<-reg1$boundary#
+plot.boundary(boundary,main="Plot of Posterior Neighborhood\n Boundary Probabilites",main.sub="ID=101, Eye=Right, Field=1",col.grid="gray",inv=FALSE,func=l)
+Plot Adjacency Probabilities#
+source("/Users/Sam/Documents/Sam/School/Dissertation/Models/Likelihoods/Glaucoma_R_Functions/plot_boundary.R")#
+l<-function(x) {o<-5*(1-x);return(o)}#
+# pdf("/Users/Sam/Documents/Sam/School/Dissertation/Models/Boundary\ Models/CAR_Dissimilarity/Output_degree/ID109ELF1/boundary1.pdf")#
+boundary<-reg$boundary#
+plot.boundary(boundary,main="Plot of Posterior Neighborhood\n Boundary Probabilites",main.sub="ID=101, Eye=Right, Field=1",col.grid="gray",inv=FALSE,func=l)#
+# dev.off()
+MCMC Checks: Traceplots#
+library(coda)#
+par(mfcol=c(2,3))#
+traceplot(reg$mu,main=expression(paste("Traceplot of ",mu)),ylab=expression(mu))#
+traceplot(reg$sigma2,main=expression(paste("Traceplot of ",sigma^2)),ylab=expression(sigma^2))#
+traceplot(reg$tau2,main=expression(paste("Traceplot of ",tau^2)),ylab=expression(tau^2))#
+traceplot(reg$deviance,main=expression(paste("Traceplot of  Deviance")),ylab="Deviance")#
+traceplot(reg$alpha,main=expression(paste("Traceplot of ",alpha)),ylab=expression(alpha))#
+traceplot(reg$theta[,1],main=expression(paste("Traceplot of ",theta[1])),ylab=expression(theta[1]))
+mean(reg$alpha)
+source("/Users/Sam/Documents/Sam/School/Dissertation/Models/Likelihoods/Glaucoma_R_Functions/plot_car.R")#
+ppd<-apply(reg$ppd,2,mean)
+plot.car(Y1=Y,Y2=ppd,main="CAR Dissimilarity Model (iid)",label="Observed",label2="Predicted",cont=TRUE,bins=100)
+Read in Data for ID=109, Eye=Left, Field=1#
+# glaucoma<-read.csv("/Users/Sam/Documents/Sam/School/Dissertation/Data/Brigid\ Data/all_josh.csv")#
+#
+###Read in Adjacency Matrix#
+source("/Users/Sam/Documents/Sam/School/Dissertation/Models/Likelihoods/Glaucoma_R_Functions/adjacency.R")#
+W<-adj.mat(Adj)#
+#
+###Source CAR Dissimilarity Model Code#
+source("/Users/Sam/Documents/Sam/School/Dissertation/Models/Likelihoods/Glaucoma_R_Functions/car_dissimilarity.R")#
+#
+###Attach Optic Nerve Degree Dissimilarity#
+source("/Users/Sam/Documents/Sam/School/Dissertation/Models/Likelihoods/Glaucoma_R_Functions/opticnervedegree.R")#
+D<-degree#
+#
+###Simuate IID Data#
+set.seed(54)#
+Y<-floor(rnorm(54,25,3))#
+reg<-car_dis(nsims=50000,Y=Y,D=D,inits=list(mu=3,sigma2=1,tau2=1,alpha=0.5),hypers=list(mu=c(10e4),sigma2=c(3,1),tau2=c(3,1),alpha=10),metrop=list(delta=0.03),W=W,epsilon=0.001,scale=10,burn_in=0.5,thin=1000,output="/Users/Sam/Documents/Sam/School/Dissertation/Models/Boundary\ Models/CAR_Dissimilarity/Output_iid/")#
+save(reg,file="/Users/Sam/Documents/Sam/School/Dissertation/Models/Boundary\ Models/CAR_Dissimilarity/Output_iid/reg.RData")
+MCMC Checks: Traceplots#
+library(coda)#
+par(mfcol=c(2,3))#
+traceplot(reg$mu,main=expression(paste("Traceplot of ",mu)),ylab=expression(mu))#
+traceplot(reg$sigma2,main=expression(paste("Traceplot of ",sigma^2)),ylab=expression(sigma^2))#
+traceplot(reg$tau2,main=expression(paste("Traceplot of ",tau^2)),ylab=expression(tau^2))#
+traceplot(reg$deviance,main=expression(paste("Traceplot of  Deviance")),ylab="Deviance")#
+traceplot(reg$alpha,main=expression(paste("Traceplot of ",alpha)),ylab=expression(alpha))#
+traceplot(reg$theta[,1],main=expression(paste("Traceplot of ",theta[1])),ylab=expression(theta[1]))
+Plot Adjacency Probabilities#
+source("/Users/Sam/Documents/Sam/School/Dissertation/Models/Likelihoods/Glaucoma_R_Functions/plot_boundary.R")#
+l<-function(x) {o<-5*(1-x);return(o)}#
+# pdf("/Users/Sam/Documents/Sam/School/Dissertation/Models/Boundary\ Models/CAR_Dissimilarity/Output_iid/boundary.pdf")#
+boundary<-reg$boundary#
+plot.boundary(boundary,main="Plot of Posterior Neighborhood\n Boundary Probabilites",main.sub="ID=101, Eye=Right, Field=1",col.grid="gray",inv=FALSE,func=l)#
+# dev.off()
+Plot Spatially Varying Slopes#
+source("/Users/Sam/Documents/Sam/School/Dissertation/Models/Likelihoods/Glaucoma_R_Functions/plot_car.R")#
+ppd<-apply(reg$ppd,2,mean)#
+plot.car(Y1=Y,Y2=ppd,main="CAR Dissimilarity Model (iid)",label="Observed",label2="Predicted",cont=TRUE,bins=100)
+mean(reg$alpha)
+c(mean(reg$alpha),var(reg$alpha),quantile(reg$alpha,probs=c(0.025,0.975)))
+xtable(c(mean(reg$alpha),var(reg$alpha),quantile(reg$alpha,probs=c(0.025,0.975))),digits=c(0,4,7,4,4))
+library(xtable)
+xtable(c(mean(reg$alpha),var(reg$alpha),quantile(reg$alpha,probs=c(0.025,0.975))),digits=c(0,4,7,4,4))
+out<-c(mean(reg$alpha),var(reg$alpha),quantile(reg$alpha,probs=c(0.025,0.975)))
+xtable(out,digits=c(0,4,7,4,4))
+xtable(out,digit=c(0,4,7,4,4))
+xtable(out,digits=c(4,7,4,4))
+xtable(out,digits=c(0,4,7,4,4))
+out
+out<-matrix(c(mean(reg$alpha),var(reg$alpha),quantile(reg$alpha,probs=c(0.025,0.975))),nrow=1,ncol=4)
+xtable(out,digits=c(0,4,7,4,4))
+sys.Info()
+Sys.info()
+Sys.info()[8]
 Load Libraries (may need a few extra functions...)#
 #
 ###Read in Data (format data into the Y, U and X matrices)#
@@ -166,122 +669,595 @@ onen<-rep(1,n)#
 phi<-1#
 g<-rep(1,H)#
 b<-log(g)#
+xi<-rep(1,n)#
+#
+###Hyperparameters#
+a<-rep(3,H)#
+b<-rep(1,H)#
+p<-rep(0.5,H)#
+A<-matrix(nrow=H,ncol=2)#
+A[,1]<-rep(0,H)#
+A[,2]<-rep(Inf,H)#
+#
+###Metropolis Objects#
+phi_propvar<-1#
+acceptance_phi<-0#
+#
+###Distribution Functions#
+#
+## Sample from multinomial#
+rmult<- function(ns, P){#
+  Ys<- matrix(0,nrow(P),ncol(P))#
+  if(sum(ns)>0)#
+    Ys[ns>0,1]<- rbinom(sum(ns>0),ns[ns>0],P[ns>0,1])#
+  ns<- ns-Ys[,1]#
+  if(sum(ns)>0) Ys[ns>0,2]<- rbinom(sum(ns>0),ns[ns>0],P[ns>0,2]/(1-P[ns>0,1]))#
+  ns<- ns-Ys[,2]#
+  for(j in 3:(ncol(P)-1)){#
+    if(sum(ns)>0)#
+      Ys[ns>0,j]<- rbinom(sum(ns>0),ns[ns>0], #
+                          P[ns>0,j]/(1-P[ns>0,1:(j-1)]%*%rep(1,j-1)))#
+    ns<- ns-Ys[,j]#
+  }#
+  Ys[,ncol(P)]<- ns#
+  Ys#
+}#
+#
+#Sample from one-inflated gamma truncated by region A#
+rI1gammaT <- function(n,p,a,b,A){#
+  z <- rbinom(n,1,p)#
+  z+(1-z)*qgamma(runif(n,pgamma(A[1],a,b),pgamma(A[2],a,b)),a,b)#
+}#
+#
+##Gamma Constant#
+lC <- function(a,b) {out<-b*log(a)-lgamma(a); return(out)}
+Sample Latent Variable Z#
+	Z <- numeric(length=N)#
+	for (i in 1:ncyc) {#
+		#Define data for individual i, cycle j#
+		idcyc <- (K*(i-1)+1):(i*K)#
+		u <- U[idcyc,]#
+		x <- X[idcyc]#
+		y <- Y[i]#
+		ID <- unique(id[idcyc])#
+#
+		#Sample Z_ij#
+		if (y!=0) {#
+			#Sample z_ij (scalar Z_ij) from zero truncated poisson (https://stat.ethz.ch/pipermail/r-help/2005-May/070678.html)#
+			mu <- xi[ID]*exp(u%*%b)#
+			mean_pois <- as.numeric(x%*%mu)#
+			unif <- runif(1)#
+			tt <- -log(1-unif*(1-exp(mean_pois)))#
+			T1 <- mean_pois-tt#
+			z_ij <- rpois(1,T1)+1#
+			#Sample Z_ij (vector Z_ij)#
+			ns <- z_ij#
+			P <- matrix(x*mu/mean_pois,nrow=1,ncol=K)#
+			Z[idcyc]<-rmult(ns,P)#
+		#End Sample Z_ij#
+		}#
+	##End latent Z loop#
+	}
+Z <- numeric(length=N)
+Z
+i<-1
+idcyc <- (K*(i-1)+1):(i*K)
+u <- U[idcyc,]#
+		x <- X[idcyc]#
+		y <- Y[i]#
+		ID <- unique(id[idcyc])
+u
+x
+y
+ID
+(y!=0)
+Y
+i<-4
+Define data for individual i, cycle j#
+		idcyc <- (K*(i-1)+1):(i*K)#
+		u <- U[idcyc,]#
+		x <- X[idcyc]#
+		y <- Y[i]#
+		ID <- unique(id[idcyc])
+(y!=0)
+u
+mu <- xi[ID]*exp(u%*%b)#
+			mean_pois <- as.numeric(x%*%mu)#
+			unif <- runif(1)#
+			tt <- -log(1-unif*(1-exp(mean_pois)))#
+			T1 <- mean_pois-tt#
+			z_ij <- rpois(1,T1)+1
+z_ij
+mu
+exp(u%*%b)
+b
+Initial Values#
+phi<-1#
+g<-rep(1,H)#
+beta<-log(g)#
 xi<-rep(1,n)
-Hyperparameters#
+Initial Values#
+phi<-1#
+g<-rep(1,H)#
+beta<-log(g)#
+xi<-rep(1,n)#
+#
+###Hyperparameters#
 a<-rep(3,H)#
 b<-rep(1,H)#
 p<-rep(0.5,H)#
 A<-matrix(nrow=H,ncol=2)#
 A[,1]<-rep(0,H)#
 A[,2]<-rep(Inf,H)
-phi_propvar<-1#
-acceptance_phi<-0
-rm(gamma)
-rm(beta)
-C <- function(a,b) x<-b^a/gamma(a); return(x)
-C <- function(a,b) x<-b^a/gamma(a)
-C(3,1)
-C <- function(a,b) x<-b^a/gamma(a); x
-C <- function(a,b) x<-b^a/gamma(a); x
+mu <- xi[ID]*exp(u%*%beta)
+mu
+mean_pois <- as.numeric(x%*%mu)
+unif <- runif(1)#
+			tt <- -log(1-unif*(1-exp(mean_pois)))#
+			T1 <- mean_pois-tt#
+			z_ij <- rpois(1,T1)+1
+z_ij
+ns <- z_ij#
+			P <- matrix(x*mu/mean_pois,nrow=1,ncol=K)
+P
+ns
+x*mu
 x
-C <- function(a,b) out<-b^a/gamma(a); out
-C <- function(a,b) {out<-b^a/gamma(a); return(out)}
-C(3,1)
-g
-U[,h]
+ns <- z_ij#
+			P <- matrix(x*mu/mean_pois,nrow=1,ncol=K)
+P
+rmult(ns,P)
+rmult(ns,P)
+rmult(ns,P)
+rmult(ns,P)
+rmult(ns,P)
+rmult(ns,P)
+rmult(ns,P)
+rmult(ns,P)
+rmult(ns,P)
+rmult(ns,P)
+rmult(ns,P)
+rmult(ns,P)
+Z <- numeric(length=N)#
+	for (i in 1:ncyc) {#
+		#Define data for individual i, cycle j#
+		idcyc <- (K*(i-1)+1):(i*K)#
+		u <- U[idcyc,]#
+		x <- X[idcyc]#
+		y <- Y[i]#
+		ID <- unique(id[idcyc])#
+#
+		#Sample Z_ij#
+		if (y!=0) {#
+			#Sample z_ij (scalar Z_ij) from zero truncated poisson (https://stat.ethz.ch/pipermail/r-help/2005-May/070678.html)#
+			mu <- xi[ID]*exp(u%*%beta)#
+			mean_pois <- as.numeric(x%*%mu)#
+			unif <- runif(1)#
+			tt <- -log(1-unif*(1-exp(mean_pois)))#
+			T1 <- mean_pois-tt#
+			z_ij <- rpois(1,T1)+1#
+			#Sample Z_ij (vector Z_ij)#
+			ns <- z_ij#
+			P <- matrix(x*mu/mean_pois,nrow=1,ncol=K)#
+			Z[idcyc]<-rmult(ns,P)#
+		#End Sample Z_ij#
+		}#
+	##End latent Z loop#
+	}
+Z <- numeric(length=N)#
+	for (i in 1:ncyc) {#
+		#Define data for individual i, cycle j#
+		idcyc <- (K*(i-1)+1):(i*K)#
+		u <- U[idcyc,]#
+		x <- X[idcyc]#
+		y <- Y[i]#
+		ID <- unique(id[idcyc])#
+#
+		#Sample Z_ij#
+		if (y!=0) {#
+			#Sample z_ij (scalar Z_ij) from zero truncated poisson (https://stat.ethz.ch/pipermail/r-help/2005-May/070678.html)#
+			mu <- xi[ID]*exp(u%*%beta)#
+			mean_pois <- as.numeric(x%*%mu)#
+			unif <- runif(1)#
+			tt <- -log(1-unif*(1-exp(mean_pois)))#
+			T1 <- mean_pois-tt#
+			z_ij <- rpois(1,T1)+1#
+			#Sample Z_ij (vector Z_ij)#
+			ns <- z_ij#
+			P <- matrix(x*mu/mean_pois,nrow=1,ncol=K)#
+			Z[idcyc]<-rmult(ns,P)#
+		#End Sample Z_ij#
+		}#
+	##End latent Z loop#
+	}
+Z <- numeric(length=N)#
+	for (i in 1:ncyc) {#
+		#Define data for individual i, cycle j#
+		idcyc <- (K*(i-1)+1):(i*K)#
+		u <- U[idcyc,]#
+		x <- X[idcyc]#
+		y <- Y[i]#
+		ID <- unique(id[idcyc])#
+#
+		#Sample Z_ij#
+		if (y!=0) {#
+			#Sample z_ij (scalar Z_ij) from zero truncated poisson (https://stat.ethz.ch/pipermail/r-help/2005-May/070678.html)#
+			mu <- xi[ID]*exp(u%*%beta)#
+			mean_pois <- as.numeric(x%*%mu)#
+			unif <- runif(1)#
+			tt <- -log(1-unif*(1-exp(mean_pois)))#
+			T1 <- mean_pois-tt#
+			z_ij <- rpois(1,T1)+1#
+			#Sample Z_ij (vector Z_ij)#
+			ns <- z_ij#
+			P <- matrix(x*mu/mean_pois,nrow=1,ncol=K)#
+			Z[idcyc]<-rmult(ns,P)#
+		#End Sample Z_ij#
+		}#
+	##End latent Z loop#
+	}
+Z <- numeric(length=N)#
+	for (i in 1:ncyc) {#
+		#Define data for individual i, cycle j#
+		idcyc <- (K*(i-1)+1):(i*K)#
+		u <- U[idcyc,]#
+		x <- X[idcyc]#
+		y <- Y[i]#
+		ID <- unique(id[idcyc])#
+#
+		#Sample Z_ij#
+		if (y!=0) {#
+			#Sample z_ij (scalar Z_ij) from zero truncated poisson (https://stat.ethz.ch/pipermail/r-help/2005-May/070678.html)#
+			mu <- xi[ID]*exp(u%*%beta)#
+			mean_pois <- as.numeric(x%*%mu)#
+			unif <- runif(1)#
+			tt <- -log(1-unif*(1-exp(mean_pois)))#
+			T1 <- mean_pois-tt#
+			z_ij <- rpois(1,T1)+1#
+			#Sample Z_ij (vector Z_ij)#
+			ns <- z_ij#
+			P <- matrix(x*mu/mean_pois,nrow=1,ncol=K)#
+			Z[idcyc]<-rmult(ns,P)#
+		#End Sample Z_ij#
+		}#
+	##End latent Z loop#
+	}
+Z <- numeric(length=N)#
+	for (i in 1:ncyc) {#
+		#Define data for individual i, cycle j#
+		idcyc <- (K*(i-1)+1):(i*K)#
+		u <- U[idcyc,]#
+		x <- X[idcyc]#
+		y <- Y[i]#
+		ID <- unique(id[idcyc])#
+#
+		#Sample Z_ij#
+		if (y!=0) {#
+			#Sample z_ij (scalar Z_ij) from zero truncated poisson (https://stat.ethz.ch/pipermail/r-help/2005-May/070678.html)#
+			mu <- xi[ID]*exp(u%*%beta)#
+			mean_pois <- as.numeric(x%*%mu)#
+			unif <- runif(1)#
+			tt <- -log(1-unif*(1-exp(mean_pois)))#
+			T1 <- mean_pois-tt#
+			z_ij <- rpois(1,T1)+1#
+			#Sample Z_ij (vector Z_ij)#
+			ns <- z_ij#
+			P <- matrix(x*mu/mean_pois,nrow=1,ncol=K)#
+			Z[idcyc]<-rmult(ns,P)#
+		#End Sample Z_ij#
+		}#
+	##End latent Z loop#
+	}
+Z <- numeric(length=N)#
+	for (i in 1:ncyc) {#
+		#Define data for individual i, cycle j#
+		idcyc <- (K*(i-1)+1):(i*K)#
+		u <- U[idcyc,]#
+		x <- X[idcyc]#
+		y <- Y[i]#
+		ID <- unique(id[idcyc])#
+#
+		#Sample Z_ij#
+		if (y!=0) {#
+			#Sample z_ij (scalar Z_ij) from zero truncated poisson (https://stat.ethz.ch/pipermail/r-help/2005-May/070678.html)#
+			mu <- xi[ID]*exp(u%*%beta)#
+			mean_pois <- as.numeric(x%*%mu)#
+			unif <- runif(1)#
+			tt <- -log(1-unif*(1-exp(mean_pois)))#
+			T1 <- mean_pois-tt#
+			z_ij <- rpois(1,T1)+1#
+			#Sample Z_ij (vector Z_ij)#
+			ns <- z_ij#
+			P <- matrix(x*mu/mean_pois,nrow=1,ncol=K)#
+			Z[idcyc]<-rmult(ns,P)#
+		#End Sample Z_ij#
+		}#
+	##End latent Z loop#
+	}
+Z <- numeric(length=N)#
+	for (i in 1:ncyc) {#
+		#Define data for individual i, cycle j#
+		idcyc <- (K*(i-1)+1):(i*K)#
+		u <- U[idcyc,]#
+		x <- X[idcyc]#
+		y <- Y[i]#
+		ID <- unique(id[idcyc])#
+#
+		#Sample Z_ij#
+		if (y!=0) {#
+			#Sample z_ij (scalar Z_ij) from zero truncated poisson (https://stat.ethz.ch/pipermail/r-help/2005-May/070678.html)#
+			mu <- xi[ID]*exp(u%*%beta)#
+			mean_pois <- as.numeric(x%*%mu)#
+			unif <- runif(1)#
+			tt <- -log(1-unif*(1-exp(mean_pois)))#
+			T1 <- mean_pois-tt#
+			z_ij <- rpois(1,T1)+1#
+			#Sample Z_ij (vector Z_ij)#
+			ns <- z_ij#
+			P <- matrix(x*mu/mean_pois,nrow=1,ncol=K)#
+			Z[idcyc]<-rmult(ns,P)#
+		#End Sample Z_ij#
+		}#
+	##End latent Z loop#
+	}
+Z <- numeric(length=N)#
+	for (i in 1:ncyc) {#
+		#Define data for individual i, cycle j#
+		idcyc <- (K*(i-1)+1):(i*K)#
+		u <- U[idcyc,]#
+		x <- X[idcyc]#
+		y <- Y[i]#
+		ID <- unique(id[idcyc])#
+#
+		#Sample Z_ij#
+		if (y!=0) {#
+			#Sample z_ij (scalar Z_ij) from zero truncated poisson (https://stat.ethz.ch/pipermail/r-help/2005-May/070678.html)#
+			mu <- xi[ID]*exp(u%*%beta)#
+			mean_pois <- as.numeric(x%*%mu)#
+			unif <- runif(1)#
+			tt <- -log(1-unif*(1-exp(mean_pois)))#
+			T1 <- mean_pois-tt#
+			z_ij <- rpois(1,T1)+1#
+			#Sample Z_ij (vector Z_ij)#
+			ns <- z_ij#
+			P <- matrix(x*mu/mean_pois,nrow=1,ncol=K)#
+			Z[idcyc]<-rmult(ns,P)#
+		#End Sample Z_ij#
+		}#
+	##End latent Z loop#
+	}
+Z <- numeric(length=N)#
+	for (i in 1:ncyc) {#
+		#Define data for individual i, cycle j#
+		idcyc <- (K*(i-1)+1):(i*K)#
+		u <- U[idcyc,]#
+		x <- X[idcyc]#
+		y <- Y[i]#
+		ID <- unique(id[idcyc])#
+#
+		#Sample Z_ij#
+		if (y!=0) {#
+			#Sample z_ij (scalar Z_ij) from zero truncated poisson (https://stat.ethz.ch/pipermail/r-help/2005-May/070678.html)#
+			mu <- xi[ID]*exp(u%*%beta)#
+			mean_pois <- as.numeric(x%*%mu)#
+			unif <- runif(1)#
+			tt <- -log(1-unif*(1-exp(mean_pois)))#
+			T1 <- mean_pois-tt#
+			z_ij <- rpois(1,T1)+1#
+			#Sample Z_ij (vector Z_ij)#
+			ns <- z_ij#
+			P <- matrix(x*mu/mean_pois,nrow=1,ncol=K)#
+			Z[idcyc]<-rmult(ns,P)#
+		#End Sample Z_ij#
+		}#
+	##End latent Z loop#
+	}
+Z <- numeric(length=N)#
+	for (i in 1:ncyc) {#
+		#Define data for individual i, cycle j#
+		idcyc <- (K*(i-1)+1):(i*K)#
+		u <- U[idcyc,]#
+		x <- X[idcyc]#
+		y <- Y[i]#
+		ID <- unique(id[idcyc])#
+#
+		#Sample Z_ij#
+		if (y!=0) {#
+			#Sample z_ij (scalar Z_ij) from zero truncated poisson (https://stat.ethz.ch/pipermail/r-help/2005-May/070678.html)#
+			mu <- xi[ID]*exp(u%*%beta)#
+			mean_pois <- as.numeric(x%*%mu)#
+			unif <- runif(1)#
+			tt <- -log(1-unif*(1-exp(mean_pois)))#
+			T1 <- mean_pois-tt#
+			z_ij <- rpois(1,T1)+1#
+			#Sample Z_ij (vector Z_ij)#
+			ns <- z_ij#
+			P <- matrix(x*mu/mean_pois,nrow=1,ncol=K)#
+			Z[idcyc]<-rmult(ns,P)#
+		#End Sample Z_ij#
+		}#
+	##End latent Z loop#
+	}
+Z <- numeric(length=N)#
+	for (i in 1:ncyc) {#
+		#Define data for individual i, cycle j#
+		idcyc <- (K*(i-1)+1):(i*K)#
+		u <- U[idcyc,]#
+		x <- X[idcyc]#
+		y <- Y[i]#
+		ID <- unique(id[idcyc])#
+#
+		#Sample Z_ij#
+		if (y!=0) {#
+			#Sample z_ij (scalar Z_ij) from zero truncated poisson (https://stat.ethz.ch/pipermail/r-help/2005-May/070678.html)#
+			mu <- xi[ID]*exp(u%*%beta)#
+			mean_pois <- as.numeric(x%*%mu)#
+			unif <- runif(1)#
+			tt <- -log(1-unif*(1-exp(mean_pois)))#
+			T1 <- mean_pois-tt#
+			z_ij <- rpois(1,T1)+1#
+			#Sample Z_ij (vector Z_ij)#
+			ns <- z_ij#
+			P <- matrix(x*mu/mean_pois,nrow=1,ncol=K)#
+			Z[idcyc]<-rmult(ns,P)#
+		#End Sample Z_ij#
+		}#
+	##End latent Z loop#
+	}
+Z <- numeric(length=N)#
+	for (i in 1:ncyc) {#
+		#Define data for individual i, cycle j#
+		idcyc <- (K*(i-1)+1):(i*K)#
+		u <- U[idcyc,]#
+		x <- X[idcyc]#
+		y <- Y[i]#
+		ID <- unique(id[idcyc])#
+#
+		#Sample Z_ij#
+		if (y!=0) {#
+			#Sample z_ij (scalar Z_ij) from zero truncated poisson (https://stat.ethz.ch/pipermail/r-help/2005-May/070678.html)#
+			mu <- xi[ID]*exp(u%*%beta)#
+			mean_pois <- as.numeric(x%*%mu)#
+			unif <- runif(1)#
+			tt <- -log(1-unif*(1-exp(mean_pois)))#
+			T1 <- mean_pois-tt#
+			z_ij <- rpois(1,T1)+1#
+			#Sample Z_ij (vector Z_ij)#
+			ns <- z_ij#
+			P <- matrix(x*mu/mean_pois,nrow=1,ncol=K)#
+			Z[idcyc]<-rmult(ns,P)#
+		#End Sample Z_ij#
+		}#
+	##End latent Z loop#
+	}
+Z <- numeric(length=N)#
+	for (i in 1:ncyc) {#
+		#Define data for individual i, cycle j#
+		idcyc <- (K*(i-1)+1):(i*K)#
+		u <- U[idcyc,]#
+		x <- X[idcyc]#
+		y <- Y[i]#
+		ID <- unique(id[idcyc])#
+#
+		#Sample Z_ij#
+		if (y!=0) {#
+			#Sample z_ij (scalar Z_ij) from zero truncated poisson (https://stat.ethz.ch/pipermail/r-help/2005-May/070678.html)#
+			mu <- xi[ID]*exp(u%*%beta)#
+			mean_pois <- as.numeric(x%*%mu)#
+			unif <- runif(1)#
+			tt <- -log(1-unif*(1-exp(mean_pois)))#
+			T1 <- mean_pois-tt#
+			z_ij <- rpois(1,T1)+1#
+			#Sample Z_ij (vector Z_ij)#
+			ns <- z_ij#
+			P <- matrix(x*mu/mean_pois,nrow=1,ncol=K)#
+			Z[idcyc]<-rmult(ns,P)#
+		#End Sample Z_ij#
+		}#
+	##End latent Z loop#
+	}
+Z <- numeric(length=N)#
+	for (i in 1:ncyc) {#
+		#Define data for individual i, cycle j#
+		idcyc <- (K*(i-1)+1):(i*K)#
+		u <- U[idcyc,]#
+		x <- X[idcyc]#
+		y <- Y[i]#
+		ID <- unique(id[idcyc])#
+#
+		#Sample Z_ij#
+		if (y!=0) {#
+			#Sample z_ij (scalar Z_ij) from zero truncated poisson (https://stat.ethz.ch/pipermail/r-help/2005-May/070678.html)#
+			mu <- xi[ID]*exp(u%*%beta)#
+			mean_pois <- as.numeric(x%*%mu)#
+			unif <- runif(1)#
+			tt <- -log(1-unif*(1-exp(mean_pois)))#
+			T1 <- mean_pois-tt#
+			z_ij <- rpois(1,T1)+1#
+			#Sample Z_ij (vector Z_ij)#
+			ns <- z_ij#
+			P <- matrix(x*mu/mean_pois,nrow=1,ncol=K)#
+			Z[idcyc]<-rmult(ns,P)#
+		#End Sample Z_ij#
+		}#
+	##End latent Z loop#
+	}
+Z <- numeric(length=N)#
+	for (i in 1:ncyc) {#
+		#Define data for individual i, cycle j#
+		idcyc <- (K*(i-1)+1):(i*K)#
+		u <- U[idcyc,]#
+		x <- X[idcyc]#
+		y <- Y[i]#
+		ID <- unique(id[idcyc])#
+#
+		#Sample Z_ij#
+		if (y!=0) {#
+			#Sample z_ij (scalar Z_ij) from zero truncated poisson (https://stat.ethz.ch/pipermail/r-help/2005-May/070678.html)#
+			mu <- xi[ID]*exp(u%*%beta)#
+			mean_pois <- as.numeric(x%*%mu)#
+			unif <- runif(1)#
+			tt <- -log(1-unif*(1-exp(mean_pois)))#
+			T1 <- mean_pois-tt#
+			z_ij <- rpois(1,T1)+1#
+			#Sample Z_ij (vector Z_ij)#
+			ns <- z_ij#
+			P <- matrix(x*mu/mean_pois,nrow=1,ncol=K)#
+			Z[idcyc]<-rmult(ns,P)#
+		#End Sample Z_ij#
+		}#
+	##End latent Z loop#
+	}
 Z
-dim(U)
-dim(Z)
-length(Z)
-U[,h]
-uh<-U[,h]
+h<-1
 Set hyperparameters#
 		ah <- a[h]#
 		bh <- b[h]#
 		ph <- p[h]#
-		Ah <- A[h,]
-uh <- U[,h]
-uh
-uh*Z
-sum(uh*Z)
-g
-g^U
-dim(g^U)
-dim(g^U)[,-h]
-g^U[,-h]
-temp <- g^U
-temp <- g^U
-dim(temp)
-temp <- temp[,-h]
-dim(temp)
-apply(temp,1,prod)
-g
-prod_gamma <- apply(temp,1,prod)
-prod_gamma
-xi
-table(id)
-lapply(xi,rep,table(id)/5)
-table(id)/5
-lapply(xi,rep,as.numeric(table(id)/5))
-lapply(1:5,rep)
-lapply(1:5,rep,each=2)
-lapply(1:5,rep,by=2)
-lapply(xi,rep,by=as.numeric(table(id)/5))
-unlist(lapply(xi,rep,by=as.numeric(table(id)/5)))
-unlist(lapply(xi,rep,each=as.numeric(table(id)/5)))
-warnings()
-mapply(rep,1:4,4:1)
-unlist(mapply(rep,1:4,4:1))
-unlist(mapply(rep,xi,4:1))
-unlist(mapply(rep,xi,as.numeric(table(id)/5))))
-unlist(mapply(rep,xi,as.numeric(table(id)/5)))
-unlist(mapply(rep,xi,as.numeric(table(id))))
-xi<-1:300
-unlist(mapply(rep,xi,as.numeric(table(id))))
-xi<-rep(1,n)
-xi_i <- unlist(mapply(rep,xi,as.numeric(table(id))))
-xi_i*prod_gamma
-sum(xi_i*prod_gamma)
+		Ah <- A[h,]#
+		#Calculate posterior hyperparameters#
+			#ah_tilde#
+			uh <- U[,h]		#
+			ah_t <- ah+sum(uh*Z)	#
+			#bh_tilde#
+			temp <- g^U#
+			temp <- temp[,-h]#
+			prod_gamma <- apply(temp,1,prod)#
+			xi_i <- unlist(mapply(rep,xi,as.numeric(table(id))))#
+			bh_t <- bh+sum(xi_i*prod_gamma)
 ah_t
 bh_t
-uh <- U[,h]		#
-		ah_t <- ah+sum(uh*Z)	#
-		temp <- g^U#
-		temp <- temp[,-h]#
-		prod_gamma <- apply(temp,1,prod)#
-		xi_i <- unlist(mapply(rep,xi,as.numeric(table(id))))#
-		bh_t <- bh+sum(xi_i*prod_gamma)
-num<-(ph*exp(-(bh_t-bh)))
-num
-bh_t-bh
-exp(-(bh_t-bh))
-cons
-cons<-C(ah,bh)/C(ah_t,bh_t)
-cons
-num+(1-ph)*cons
-pgamma(Ah[2],ah_t,bh_t)
-(pgamma(Ah[2],ah_t,bh_t)-pgamma(Ah[1],ah_t,bh_t))
-cons2<-(pgamma(Ah[2],ah_t,bh_t)-pgamma(Ah[1],ah_t,bh_t))/(pgamma(Ah[2],ah,bh)-pgamma(Ah[1],ah,bh))
-cons2
-cons<-cons1*cons2
-cons
-num<-(ph*exp(-(bh_t-bh)))
-num+(1-ph)*cons
-den<-num+(1-ph)*cons
-ph_t<-num/den
+cons1 <- exp(lC(ah,bh)-lC(ah_t,bh_t))
+cons1
+lC(ah,bh)
+lC(ah_t,bh_t)
+cons1 <- exp(lC(ah,bh)-lC(ah_t,bh_t)+(bh_t-bh))
+cons1
+(bh_t-bh)
+lC(ah_t,bh_t)+(bh_t-bh)
+(bh_t-bh)
+lC(ah_t,bh_t)
+cons1 <- exp(lC(ah,bh)-lC(ah_t,bh_t)+(bh_t-bh))#
+			cons2 <- (pgamma(Ah[2],ah_t,bh_t)-pgamma(Ah[1],ah_t,bh_t))/(pgamma(Ah[2],ah,bh)-pgamma(Ah[1],ah,bh))#
+			cons <- cons1*cons2
+den<- cons1*cons2*(1-ph)+ph
+den
+ph_t <- ph/den
 ph_t
-pgamma(Ah[1],a,b)
-a
-b
-pgamma(Ah[2],a,b))
-pgamma(Ah[2],a,b)
-runif(n,pgamma(Ah[1],a,b),pgamma(Ah[2],a,b))
-qgamma(runif(n,pgamma(Ah[1],a,b),pgamma(Ah[2],a,b)),a,b)
-Sample from one-inflated gamma truncated by region A#
-rI1gammaT <- function(n,p,a,b,A){#
-  z <- rbinom(n,1,p)#
-  z+(1-z)*qgamma(runif(n,pgamma(A[1],a,b),pgamma(A[2],a,b)),a,b)#
-}
+ah_tilde#
+			uh <- U[,h]		#
+			ah_t <- ah+sum(uh*Z)	#
+			#bh_tilde#
+			temp <- g^U#
+			temp <- temp[,-h]#
+			prod_gamma <- apply(temp,1,prod)#
+			xi_i <- unlist(mapply(rep,xi,as.numeric(table(id))))#
+			bh_t <- bh+sum(xi_i*prod_gamma)#
+			#ph_tilde#
+			cons1 <- exp(lC(ah,bh)-lC(ah_t,bh_t)+(bh_t-bh))#
+			cons2 <- (pgamma(Ah[2],ah_t,bh_t)-pgamma(Ah[1],ah_t,bh_t))/(pgamma(Ah[2],ah,bh)-pgamma(Ah[1],ah,bh))#
+			den<- cons1*cons2*(1-ph)+ph#
+			ph_t <- ph/den
 ph_t
 rI1gammaT(1,ph_t,ah_t,bh_t,Ah)
 rI1gammaT(1,ph_t,ah_t,bh_t,Ah)
@@ -290,53 +1266,32 @@ rI1gammaT(1,ph_t,ah_t,bh_t,Ah)
 rI1gammaT(1,ph_t,ah_t,bh_t,Ah)
 rI1gammaT(1,ph_t,ah_t,bh_t,Ah)
 rI1gammaT(1,ph_t,ah_t,bh_t,Ah)
-rI1gammaT(1,ph,ah_t,bh_t,Ah)
-rI1gammaT(1,ph,ah_t,bh_t,Ah)
-rI1gammaT(1,ph,ah_t,bh_t,Ah)
-rI1gammaT(1,ph,ah_t,bh_t,Ah)
-rI1gammaT(1,ph,ah_t,bh_t,Ah)
-rI1gammaT(1,ph,ah_t,bh_t,Ah)
-rI1gammaT(1,ph,ah_t,bh_t,Ah)
-rI1gammaT(1,ph,ah_t,bh_t,Ah)
-rI1gammaT(1,ph,ah_t,bh_t,Ah)
-rI1gammaT(1,ph,ah_t,bh_t,Ah)
-rI1gammaT(1,ph,ah_t,bh_t,Ah)
-rI1gammaT(1,ph,ah_t,bh_t,Ah)
-rI1gammaT(1,ph,ah_t,bh_t,Ah)
-rI1gammaT(1,ph,ah_t,bh_t,Ah)
-rI1gammaT(1,ph,ah_t,bh_t,Ah)
-rI1gammaT(1,ph,ah_t,bh_t,Ah)
-rI1gammaT(1,ph,ah_t,bh_t,Ah)
-rI1gammaT(1,ph,ah_t,bh_t,Ah)
-rI1gammaT(1,ph,ah_t,bh_t,Ah)
-rI1gammaT(1,ph,ah_t,bh_t,Ah)
-rI1gammaT(1,ph,ah_t,bh_t,Ah)
-rI1gammaT(1,ph,ah_t,bh_t,Ah)
-rI1gammaT(1,ph,ah_t,bh_t,Ah)
-rI1gammaT(1,ph,ah_t,bh_t,Ah)
-rI1gammaT(1,ph,ah_t,bh_t,Ah)
-rI1gammaT(1,ph,ah_t,bh_t,Ah)
-rI1gammaT(1,ph,ah_t,bh_t,Ah)
-rI1gammaT(1,ph,ah_t,bh_t,Ah)
-rI1gammaT(1,ph,ah_t,bh_t,Ah)
-rI1gammaT(1,ph,ah_t,bh_t,Ah)
-rI1gammaT(1,ph,ah_t,bh_t,Ah)
-rI1gammaT(1,ph,ah_t,bh_t,Ah)
-rI1gammaT(1,ph,ah_t,bh_t,Ah)
-rI1gammaT(1,ph,ah_t,bh_t,Ah)
-rI1gammaT(1,ph,ah_t,bh_t,Ah)
-rI1gammaT(1,ph,ah_t,bh_t,Ah)
-rI1gammaT(1,ph,ah_t,bh_t,Ah)
-rI1gammaT(1,ph,ah_t,bh_t,Ah)
-rI1gammaT(1,ph,ah_t,bh_t,Ah)
-rI1gammaT(1,ph,ah_t,bh_t,Ah)
-rI1gammaT(1,ph,ah_t,bh_t,Ah)
-rI1gammaT(1,ph,ah_t,bh_t,Ah)
-rI1gammaT(1,ph,ah_t,bh_t,Ah)
-rI1gammaT(1,ph,ah_t,bh_t,Ah)
-rI1gammaT(1,ph,ah_t,bh_t,Ah)
-rI1gammaT(1,ph,ah_t,bh_t,Ah)
-rI1gammaT(1,ph,ah_t,bh_t,Ah)
-rI1gammaT(1,ph,ah_t,bh_t,Ah)
-rI1gammaT(1,ph,ah_t,bh_t,Ah)
-rI1gammaT(1,ph,ah_t,bh_t,Ah)
+rI1gammaT(1,ph_t,ah_t,bh_t,Ah)
+rI1gammaT(1,ph_t,ah_t,bh_t,Ah)
+rI1gammaT(1,ph_t,ah_t,bh_t,Ah)
+Gamma_h full conditional#
+	for (h in 1:H) {#
+		#Set hyperparameters#
+		ah <- a[h]#
+		bh <- b[h]#
+		ph <- p[h]#
+		Ah <- A[h,]#
+		#Calculate posterior hyperparameters#
+			#ah_tilde#
+			uh <- U[,h]		#
+			ah_t <- ah+sum(uh*Z)	#
+			#bh_tilde#
+			temp <- g^U#
+			temp <- temp[,-h]#
+			prod_gamma <- apply(temp,1,prod)#
+			xi_i <- unlist(mapply(rep,xi,as.numeric(table(id))))#
+			bh_t <- bh+sum(xi_i*prod_gamma)#
+			#ph_tilde#
+			cons1 <- exp(lC(ah,bh)-lC(ah_t,bh_t)+(bh_t-bh))#
+			cons2 <- (pgamma(Ah[2],ah_t,bh_t)-pgamma(Ah[1],ah_t,bh_t))/(pgamma(Ah[2],ah,bh)-pgamma(Ah[1],ah,bh))#
+			den<- cons1*cons2*(1-ph)+ph#
+			ph_t <- ph/den#
+		#Sample from one-inflated gamma truncated to region Ah#
+		g[h] <- rI1gammaT(1,ph_t,ah_t,bh_t,Ah)		#
+	}
+g
