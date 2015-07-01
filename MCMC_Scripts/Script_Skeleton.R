@@ -131,7 +131,7 @@ for (s in 1:nsims) {
 			temp <- g^U
 			prod_gamma <- apply(temp[ ,-h], 1, prod)
 			xi_i <- unlist( mapply(rep, xi, as.numeric(table(id))) )
-			bh_t <- bh+sum(xi_i*prod_gamma)
+			bh_t <- bh+sum(xi_i[X==1]*prod_gamma[X==1]) #sum over only X==1
 			
 			#ph_tilde
 			cons1 <- exp( lC(ah,bh) - lC(ah_t,bh_t) + (bh_t-bh) )
@@ -141,7 +141,7 @@ for (s in 1:nsims) {
 		
 		#Sample from one-inflated gamma truncated to region Ah
 		g[h] <- rI1gammaT(1, ph_t, ah_t, bh_t, Ah)		
-	
+
 	##End gamma sampler
 	}
 	
