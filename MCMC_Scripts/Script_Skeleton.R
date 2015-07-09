@@ -165,7 +165,7 @@ for (s in 1:nsims) {
 		#We will have to either transform phi or only accept if it is positive (we can discuss this more later...)
 		
 		#Compute log acceptance ratio		
-		log.r<-
+		#log.r<-
 
 		##Update phi
 		if (log(runif(1))<log.r) {

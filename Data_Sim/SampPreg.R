@@ -34,7 +34,7 @@ sampPreg <- function(dspDat, betaDays, betaCovs, xi=NULL, phi, fwLen, verbose=FA
   
   pregVec <- integer( length=(nrow(dspDat) / fwLen) )
   niVec <- sapply(X=cycIdx, FUN=length)
-  piVec <- integer( length=(nrow(dspDat) / fwLen) )
+  piVec <- numeric( length=(nrow(dspDat) / fwLen) )
   ctr <- 1
  
   for (i in 1:n) {
@@ -71,43 +71,7 @@ sampPreg <- function(dspDat, betaDays, betaCovs, xi=NULL, phi, fwLen, verbose=FA
 
 # Remove cycles not needed due to successful preg ==============================
 
-# rmSuperfluous <- function(cycle, daily, pregVec) {
-#   fwLen <- nrow(daily) / nrow(cycle)
-#   idVec <- unique(cycle$subjId)
-#   idDayVec <- rep(x=cycle$subjId, each=fwLen)
-#   cycIdxDay <- getCycIdx(idVec=idDayVec, fwLen=fwLen)
-#   cycIdxCyc <- lapply(X=idVec, FUN=function(x) which(cycle$subjId == x))
-#   
-#   n <- length(idVec)
-#   niVec <- sapply(X=cycIdxCyc, FUN=length)
-#   keepBoolCyc <- logical(length=nrow(cycle))
-#   keepBoolDay <- logical(length=nrow(daily))
-#   ctr <- 1
-#   
-#   for (i in 1:n) {
-#     for (j in 1:niVec[i]) {
-#       
-#       if (pregVec[ctr] != 2) {
-#         keepBoolCyc[ cycIdxCyc[[ i ]][[ j ]] ] <- TRUE
-#         keepBoolDay[ cycIdxDay[[ i ]][[ j ]] ] <- TRUE
-#       }
-# 
-#       ctr <- ctr + 1
-#     }
-#   }
-#   
-#   cycle <- cycle[keepBoolCyc, ]
-#   daily <- daily[keepBoolDay, ]
-#   pregVec <- pregVec[keepBoolCyc]
-#   
-#   return ( list(cycle = data.frame(cycle, pregInd=pregVec),
-#                 daily = daily) )
-# }
-
-
-# Much, much smarter approach
-
-rmSuperfluous <- function(baseline, cycle, daily, pregVec) {
+rmSuperfluous <- function(baseline, cycle, daily, pregVec, wVec=NULL, xiVec=NULL) {
   fwLen <- nrow(daily) / nrow(cycle)  
   keepBoolCyc <- (pregVec != 2)
   keepBoolDay <- rep(x=keepBoolCyc, each=fwLen)
@@ -120,10 +84,15 @@ rmSuperfluous <- function(baseline, cycle, daily, pregVec) {
                        cycle = rep(cycle$cycle, each=fwLen),
                        daily )
   pregVec <- pregVec[keepBoolCyc]
-  
-  return ( list( baseline=baseline,
-                 cycle = data.frame(cycle, pregInd=pregVec),
-                daily = daily) )
+  dspDat <- list( baseline=baseline,
+                  cycle = data.frame(cycle, pregInd=pregVec),
+                  daily = daily)
+  if (!is.null(wVec))
+    dspDat$W <- wVec[keepBoolDay]
+  if (!is.null(xiVec))
+    dspDat$xi <- xiVec
+
+  return (dspDat)
 }
 
 
