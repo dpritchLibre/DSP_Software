@@ -9,6 +9,7 @@
 
 load("Data/PracticeDatAuxMod.RData")
 source("MCMC_Scripts/McmcGetLogR.R")
+source("MCMC_Scripts/McmcDGammaPost.R")
 set.seed(0)
 
 
@@ -39,57 +40,74 @@ xiDay <- rep(x=xiCyc, each=fwLen)
 
 # Sample p(phi | ...) via Metropolis algorithm =================================
 
-B <- 5e4
-delta <- 0.2
-currBeta <- log(0.34)
-beta3 <- numeric(length=B)
-acceptBool <- logical(length=B)
-pJ <- 0.1
-changeLoc <- 3
-hyperparGam <- list(boundL=0, boundU=Inf, ptMassProp=0.5, shape=1, rate=1)
+# B <- 5e4
+# delta <- 0.2
+# currBeta <- log(0.34)
+# beta3 <- numeric(length=B)
+# acceptBool <- logical(length=B)
+# pJ <- 0.1
+# changeLoc <- 3
+# hyperparGam <- list(boundL=0, boundU=Inf, ptMassProp=0.5, shape=1, rate=1)
+# 
+# 
+# for (i in 1:B) {
+#   
+#   if (rbinom(n=1, size=1, prob=pJ) == 1)
+#     proposeBeta <- 0
+#   else 
+#     proposeBeta <- runif(n=1, min=(currBeta - delta), max=(currBeta + delta))
+#   
+#   logR <- getLogR(Y=Y, U=U, xi=xiDay, betaCoef=betaCoef, currVal=currBeta, proposeVal=proposeBeta, 
+#                   changeLoc=changeLoc, hyperparGam=hyperparGam)
+#   if (log(runif(1)) < logR) {
+#     beta3[i] <- currBeta <- proposeBeta
+#     acceptBool[i] <- TRUE
+#   }
+# }
 
 
-for (i in 1:B) {
-  
-  if (rbinom(n=1, size=1, prob=pJ) == 1)
-    proposeBeta <- 0
-  else 
-    proposeBeta <- runif(n=1, min=(currBeta - delta), max=(currBeta + delta))
-  
-  logR <- getLogR(Y=Y, U=U, xi=xiDay, betaCoef=betaCoef, currVal=currBeta, proposeVal=proposeBeta, 
-                  changeLoc=changeLoc, hyperparGam=hyperparGam)
-  if (log(runif(1)) < logR) {
-    beta3[i] <- currBeta <- proposeBeta
-    acceptBool[i] <- TRUE
-  }
-}
 
 
+# Calculate density function for p(gamma_h | ...) ==============================
 
-
-# Calculate quantile function for p(phi | ...) =================================
-
-gamLoc <- 3
-gamCoef <- exp( betaCoef[-gamLoc] )
+# True model hyperparameters
+gamCoef <- exp( betaCoef )
 a <- 1                               # gamma_h shape hyperparam
 b <- 1                               # gamma_h rate hyperparam
 bndL <- 0                            # gamma_h lower bound
 bndU <- Inf                          # gamma_h upper bound
-
-x <- seq(from=0.01, to=1, by=0.01)
-Fx <- numeric(length(x))
-for (k in 1:length(x))
-  Fx[k] <- pgammaPost(x[k], gamCoef, gamLoc, W, X, U, p, a, b, bndL, bndU)$value
-Fx <- unlist(Fx)
+p <- 0.5                             # prior probability of point mass at 1
 
 
+xSeq <- seq(from=0.01, to=1, by=0.01)
+fx <- matrix(nrow=length(xSeq), ncol=length(gamCoef))
+
+for (i in 1:length(xSeq))
+  for (j in 1:length(gamCoef))
+    fx[i,j] <- dgammaPost(gamVal=xSeq[i], gamCoef=gamCoef, gamLoc=j, W=W, X=X, U=U, 
+                          xi=xiDay, p=p, a=a, b=b, bndL=bndL, bndU=bndU)
+
+
+# A few plots ------------------------------------------------------------------
+
+# True value is 0.34
+plot(xSeq, fx[,3])
+
+# True value is 0.08
+plot(xSeq, fx[,5])
+
+# True value is 0.63
+plot(xSeq, fx[,10])
+
+# True value is 3.35.  This is not working properly due to large aTilde, bTilde
+plot(xSeq, fx[,11])
 
 
 # Compare Metropolis and theoretical -------------------------------------------
 
 
-Fmet <- sapply(X=seq(0.01,1.00, by=0.01), FUN=function(x) mean(exp(beta3) <= x))
-round(data.frame(Fx=Fx, Fmet=Fmet), digits=2)
+# Fmet <- sapply(X=seq(0.01,1.00, by=0.01), FUN=function(x) mean(exp(beta3) <= x))
+# round(data.frame(Fx=Fx, Fmet=Fmet), digits=2)
 
 
 
