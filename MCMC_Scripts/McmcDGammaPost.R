@@ -65,36 +65,35 @@ getbTilde <- function(gamLoc, X, U, xi, b, betaLvOut) {
 #                C(aTilde,bTilde) * int G(gam; a,b) dgam
 #
 #
+# Calculations are performed on the log scale
 
 getpTilde <- function(p, a, b, bndL, bndU, aTilde, bTilde) {
 
-  d2numer <- ( (1 - p) * getGammaConst(a, b) * getNormingConst(aTilde, bTilde, bndL, bndU) 
-               * exp(bTilde - b) )
-  d2denom <- getGammaConst(aTilde, bTilde) * getNormingConst(a, b, bndL, bndU)
-  d2 <- d2numer / d2denom
+  d2numer <- ( log(1 - p) + getLogGamConst(a, b)
+               + log( getNormingConst(aTilde, bTilde, bndL, bndU) )
+               + bTilde - b )
+  d2denom <- getLogGamConst(aTilde, bTilde) + log( getNormingConst(a, b, bndL, bndU) )
+  d2 <- exp( d2numer - d2denom )
   pTilde <- p / (p + d2)
+  
+  return (pTilde)
 }
 
 
 
 # Calculate the constant part of a gamma density -------------------------------
 
-getGammaConst <- function(a, b) {
-
-  suppressWarnings( try(return( b^a / gamma(b))) )
-  return (0)  
+getLogGamConst <- function(a, b) {
+  a * log(b) - lgamma(a)
 }
 
 
 
 
 # Calculate the norming constant for truncated gam -----------------------------
-#
-# TODO: how does this behave for large aTilde, bTilde when bounds not 0, 1?
 
 getNormingConst <- function(a, b, bndL, bndU) {
-  
-  return ( pgamma(q=bndU, shape=a, rate=b) - pgamma(q=bndL, shape=a, rate=b) )
+  pgamma(q=bndU, shape=a, rate=b) - pgamma(q=bndL, shape=a, rate=b)
 }
 
 

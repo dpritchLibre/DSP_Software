@@ -92,15 +92,24 @@ for (i in 1:length(xSeq))
 
 # True value is 0.34
 plot(xSeq, fx[,3])
+abline(v=mean(xSeq * fx[,3]))
 
 # True value is 0.08
 plot(xSeq, fx[,5])
+abline(v=mean(xSeq * fx[,5]))
 
 # True value is 0.63
 plot(xSeq, fx[,10])
+abline(v=mean(xSeq * fx[,10]))
 
-# True value is 3.35.  This is not working properly due to large aTilde, bTilde
-plot(xSeq, fx[,11])
+# True value is 3.35
+x <- seq(from=0.01, to=4, by=0.04)
+y <- dgammaPost(gamVal=x, gamCoef=gamCoef, gamLoc=11, W=W, X=X, U=U, 
+                xi=xiDay, p=p, a=a, b=b, bndL=bndL, bndU=bndU)
+plot(x, y)
+abline(v=sum(x * y) * 0.04)
+
+
 
 
 # Compare Metropolis and theoretical -------------------------------------------

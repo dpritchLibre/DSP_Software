@@ -6,17 +6,26 @@
     setwd("/Users/Sam/Documents/Sam/School/Graduate/Dave/DSP_Software/")
 }
 load("Data/PracticeDat.RData")
+source("MCMC_Scripts/Mcmc_HelperFcns.R")
 
 ###Create data objects
 K <- 5 #fertile window
+fwLen <- length(X) / length(Y) # this is equal to K for this dataset
 ncyc <- length(Y) #number of cycles
 N <- ncyc*K #number observation days
 n <- length(unique(id)) #number of individuals
 H <- dim(U)[2] #number of covariates
 
+
+idIdx <- lapply(X=unique(id), FUN=function(x) which(id == x))
+  # index to expand from baseline to cycles
+dayExpanIdx <- rep(x=seq(from=1, to=n), times=table(id))
+phiPropDist <- "normal"
+
+
 ###Matrix objects
-eyen <- diag(n)
-onen <- rep(1, n)
+#eyen <- diag(n)
+#onen <- rep(1, n)
 
 ###Initial values
 phi <- 1
@@ -31,25 +40,29 @@ p <- rep(0.5, H)
 A <- matrix(nrow=H, ncol=2)
 A[,1] <- rep(0, H)
 A[,2] <- rep(Inf, H)
+hypPhi <- list(c1=1, c2=1)
 
 ###Metropolis objects
-phi_propvar <- 1
-acceptance_phi <- 0
+#phi_propvar <- 1
+#acceptance_phi <- 0
+delta <- 0.2
+numAcceptPhi <- 0
+  
 
 ###Distribution functions
 
 ##Sample from multinomial
 rmult <- function(ns, P) {
-Ys <- matrix(0, nrow(P), ncol(P)) 
+  Ys <- matrix(0, nrow(P), ncol(P)) 
 	if (sum(ns)>0)
 		Ys[ns>0,1] <- rbinom(sum(ns>0), ns[ns>0], P[ns>0,1])
-		ns <- ns-Ys[ ,1]
+	ns <- ns-Ys[ ,1]
 	if (sum(ns)>0) Ys[ns>0,2] <- rbinom(sum(ns>0), ns[ns>0], P[ns>0,2]/(1-P[ns>0,1]))
 		ns<- ns-Ys[,2]
-	for(j in 3:(ncol(P)-1)){
+	for(j in 3:(ncol(P)-1)) {
 		if(sum(ns)>0)
 			Ys[ns>0,j] <- rbinom(sum(ns>0), ns[ns>0], P[ns>0,j]/(1-P[ns>0,1:(j-1)]%*%rep(1, j-1)))
-			ns <- ns-Ys[ ,j]
+		ns <- ns-Ys[ ,j]
 	}
 	Ys[ ,ncol(P)] <- ns
 	Ys
@@ -152,27 +165,25 @@ for (s in 1:nsims) {
 	write(g,file=paste(output,"GAMMA.csv",sep=""),sep=",",ncolumns=H,append=TRUE)
 	
 	##Xi_i Full Conditional
-	for (i in 1:n) {
-		xi[i]<-rgamma()
-	}
+  betaCoef <- beta
+  uProdBeta <- U %*% betaCoef
+  W <- Z
+  
+	xi <- sampXi(W, uProdBeta, phi, idIdx)
+  xiDay <- xi[dayExpanIdx]
 	write(xi,file=paste(output,"XI.csv",sep=""),sep=",",ncolumns=n,append=TRUE)
+
 		
 	##Metroplois Step For Phi
-			
-		#Sample from proposal distribution
-		phi_prop<-rnorm(1,phi,phi_propvar)
-
-		#We will have to either transform phi or only accept if it is positive (we can discuss this more later...)
-		
-		#Compute log acceptance ratio		
-		#log.r<-
-
-		##Update phi
-		if (log(runif(1))<log.r) {
-			phi<-phi_prop
-			acceptance_phi<-acceptance_phi+1 #keep track of acceptance rate
-		}
-	write(phi,file=paste(output,"PHI.csv",sep=""),sep=",",ncolumns=1,append=TRUE)
+	phiProp <- sampPhiProp(phi, phiPropDist, delta)
+  phiLogR <- getPhiLogR(xi=xi, phiCurr=phi, phiProp=phiProp, hypPhi=hypPhi)
+  
+	if (log(runif(1)) < phiLogR) {
+	  phi <- phiProp
+	  #acceptance_phi <- acceptance_phi+1 #keep track of acceptance rate
+    numAcceptPhi <- numAcceptPhi + 1
+	}
+	write(phi, file=paste(output,"PHI.csv",sep=""), sep=",", ncolumns=1, append=TRUE)
 	
 	##Verbose (we can personalize the verbose that we output...)
 	if (s!=nsims) print(paste("Completed Percentage: ",round((s/nsims)*100,digits=0),"%",sep=""))
@@ -192,4 +203,5 @@ for (s in 1:nsims) {
 	
 ###End MCMC Sampler	
 }
+
 
