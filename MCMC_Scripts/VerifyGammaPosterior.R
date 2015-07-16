@@ -8,7 +8,7 @@
 }
 
 load("Data/PracticeDatAuxMod.RData")
-source("MCMC_Scripts/McmcGetLogR.R")
+source("MCMC_Scripts/McmcSampGamMetrop.R")
 source("MCMC_Scripts/McmcDGammaPost.R")
 set.seed(0)
 
@@ -94,6 +94,10 @@ plotGamMetrDen <- function (gamMetrVec, gamLoc, domain, numPts, trueVal) {
   par(mar=c(2.5, 2.5, 0.1, 0.1), las=1)
   plot(x=xVals, y=yTrue, ylim=c(0, max(yTrue, yMetr)), ann=FALSE)
   points(x=xVals, y=yMetr, pch=4, col="red", cex=0.75)
+  if (yTrueMass > 0.01)
+    points(x=1, y=yTrueMass, pch=16)
+  if (yMetrMass > 0.01)
+    points(x=1, y=yMetrMass, pch=16, col="red")
   abline(v=trueVal, col="grey50", lwd=2, lty=2)
   ptMassText <- c(paste0("Point mass true: ", round(yTrueMass, 2)), 
                   paste0("Point mass Metr: ", round(yMetrMass, 2)))
@@ -118,6 +122,8 @@ plotGamPost <- function(gamLoc) {
 
 
 # Plots of the gamma posterior densities ---------------------------------------
+
+numPts <- 100  # how many points to put in plots
 
 plotGamPost(1)
 plotGamPost(2)
