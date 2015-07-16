@@ -19,6 +19,8 @@ set.seed(0)
 
 fwLen <- 5
 U <- as.matrix( U[, 1:11] )  # Only keep terms with nonzero beta coefs
+Yday <- rep(Y, each=fwLen)
+
 
 
 
@@ -28,95 +30,108 @@ betaDays <- log( c(0.14, 0.08, 0.34, 0.31, 0.08) )
 betaCovs <- list( age = c(-0.08, -0.43, -1.03),
                   bmi = c(-0.22, -0.47),
                   gravid = 1.21 )
-
 betaCoef <- c(betaDays, unlist(betaCovs))
 names(betaCoef)[1:5] <- paste0("day", 1:5)
+gamCoef <- exp(betaCoef)
+
 phi <- 1
-xiCyc <- rep(xi, times=(table(id) / fwLen))
-xiDay <- rep(x=xiCyc, each=fwLen)
+xiDay <- rep(xi, times=table(id))
 
 
 
 
-# Sample p(phi | ...) via Metropolis algorithm =================================
+# Sample p(gamma_h | ...) via Metropolis algorithm =================================
 
-# B <- 5e4
-# delta <- 0.2
-# currBeta <- log(0.34)
-# beta3 <- numeric(length=B)
-# acceptBool <- logical(length=B)
-# pJ <- 0.1
-# changeLoc <- 3
-# hyperparGam <- list(boundL=0, boundU=Inf, ptMassProp=0.5, shape=1, rate=1)
-# 
-# 
-# for (i in 1:B) {
-#   
-#   if (rbinom(n=1, size=1, prob=pJ) == 1)
-#     proposeBeta <- 0
-#   else 
-#     proposeBeta <- runif(n=1, min=(currBeta - delta), max=(currBeta + delta))
-#   
-#   logR <- getLogR(Y=Y, U=U, xi=xiDay, betaCoef=betaCoef, currVal=currBeta, proposeVal=proposeBeta, 
-#                   changeLoc=changeLoc, hyperparGam=hyperparGam)
-#   if (log(runif(1)) < logR) {
-#     beta3[i] <- currBeta <- proposeBeta
-#     acceptBool[i] <- TRUE
-#   }
-# }
+B <- 5e3        # number of Metropolis iterations
+pJ <- 0.1       # prob of selecting gamma_h = 1 in proposal dist
+delta <- 0.1    # proposal dist tuning param
+hypGam <- list(bndL=0, bndU=Inf, ph=0.5, ah=1, bh=1)
+
+
+# Sample B gamma values for each gamma_h
+gamMetrMat <- matrix(nrow=B, ncol=length(gamCoef))
+
+for (j in 1:length(gamCoef)) {
+  cat("Sampling gamma_", j, ":  ", sep="")
+  gamInit <- abs( runif(n=1, min=(gamCoef[j] - delta), max=(gamCoef[j] + delta)) )
+  gamMetrMat[,j] <- sampGamMetrop(W, X, U, gamCoef, xiDay, j, gamInit, hypGam, B, pJ, delta)
+}
 
 
 
 
-# Calculate density function for p(gamma_h | ...) ==============================
+# Empirical density from Metropolis samples fcn --------------------------------
+#
+# 'domain' is a length-2 vector.  Only returns the continuous part of the density
 
-# True model hyperparameters
-gamCoef <- exp( betaCoef )
-a <- 1                               # gamma_h shape hyperparam
-b <- 1                               # gamma_h rate hyperparam
-bndL <- 0                            # gamma_h lower bound
-bndU <- Inf                          # gamma_h upper bound
-p <- 0.5                             # prior probability of point mass at 1
-
-
-xSeq <- seq(from=0.01, to=1, by=0.01)
-fx <- matrix(nrow=length(xSeq), ncol=length(gamCoef))
-
-for (i in 1:length(xSeq))
-  for (j in 1:length(gamCoef))
-    fx[i,j] <- dgammaPost(gamVal=xSeq[i], gamCoef=gamCoef, gamLoc=j, W=W, X=X, U=U, 
-                          xi=xiDay, p=p, a=a, b=b, bndL=bndL, bndU=bndU)
-
-
-# A few plots ------------------------------------------------------------------
-
-# True value is 0.34
-plot(xSeq, fx[,3])
-abline(v=mean(xSeq * fx[,3]))
-
-# True value is 0.08
-plot(xSeq, fx[,5])
-abline(v=mean(xSeq * fx[,5]))
-
-# True value is 0.63
-plot(xSeq, fx[,10])
-abline(v=mean(xSeq * fx[,10]))
-
-# True value is 3.35
-x <- seq(from=0.01, to=4, by=0.04)
-y <- dgammaPost(gamVal=x, gamCoef=gamCoef, gamLoc=11, W=W, X=X, U=U, 
-                xi=xiDay, p=p, a=a, b=b, bndL=bndL, bndU=bndU)
-plot(x, y)
-abline(v=sum(x * y) * 0.04)
+getEmpDen <- function(x, domain, numBins) {
+  xCont <- x[abs(x - 1) > 0.0001]
+  bins <- seq(from=domain[1], to=domain[2], length.out=(numBins + 1))
+  binL <- bins[-(numBins + 1)]
+  binU <- bins[-1]
+  binCount <- sapply(X=1:numBins, FUN=function(i) sum((binL[i] < xCont) & (xCont <= binU[i])))
+  
+  wPerBin <- (domain[2] - domain[1]) / numBins
+  return (binCount / (length(x) * wPerBin))
+}
 
 
 
 
-# Compare Metropolis and theoretical -------------------------------------------
+# Plot Metrop and true density fcn ---------------------------------------------
+#
+# 'gamMetrSamps' is a vector of Metropolis samples.  'domain' is a length-2 vector
+
+plotGamMetrDen <- function (gamMetrVec, gamLoc, domain, numPts, trueVal) {
+  xVals <- seq(from=domain[1], to=domain[2], length.out=(numPts + 1))[-1]
+  yTrue <- dgammaPost(gamVal=xVals, gamCoef=gamCoef, gamLoc=gamLoc, 
+                      W=W, X=X, U=U, xiDay=xiDay, hypGam=hypGam)
+  yMetr <- getEmpDen(x=gamMetrVec, domain=domain, numBins=numPts)
+  yTrueMass <- dgammaPost(gamVal=1, gamCoef=gamCoef, gamLoc=gamLoc, 
+                          W=W, X=X, U=U, xiDay=xiDay, hypGam=hypGam)
+  yMetrMass <- sum(abs(gamMetrVec - 1) < 0.0001) / length(gamMetrVec)
+  
+  par(mar=c(2.5, 2.5, 0.1, 0.1), las=1)
+  plot(x=xVals, y=yTrue, ylim=c(0, max(yTrue, yMetr)), ann=FALSE)
+  points(x=xVals, y=yMetr, pch=4, col="red", cex=0.75)
+  abline(v=trueVal, col="grey50", lwd=2, lty=2)
+  ptMassText <- c(paste0("Point mass true: ", round(yTrueMass, 2)), 
+                  paste0("Point mass Metr: ", round(yMetrMass, 2)))
+  legend(x="topright", legend=ptMassText, text.col=c("black","red"), cex=0.75)
+}
 
 
-# Fmet <- sapply(X=seq(0.01,1.00, by=0.01), FUN=function(x) mean(exp(beta3) <= x))
-# round(data.frame(Fx=Fx, Fmet=Fmet), digits=2)
+
+# Convenience wrapper for plotGamMetrDen fcn -----------------------------------
+
+plotGamPost <- function(gamLoc) {
+  trueVal <- gamCoef[gamLoc]
+  fx <- dgammaPost(gamVal=seq(from=0.05, to=5.00, by=0.05), gamCoef=gamCoef, 
+                   gamLoc=gamLoc, W=W, X=X, U=U, xiDay=xiDay, hypGam=hypGam)
+  width <- max(0.5, sum(fx > 0.01) * 0.05)
+  domain <- c(max(0, trueVal - width), max(1, trueVal + width))
+  
+  plotGamMetrDen(gamMetrMat[,gamLoc], gamLoc, domain, numPts, trueVal)
+}
+
+
+
+
+# Plots of the gamma posterior densities ---------------------------------------
+
+plotGamPost(1)
+plotGamPost(2)
+plotGamPost(3)
+plotGamPost(4)
+plotGamPost(5)
+plotGamPost(6)
+plotGamPost(7)
+plotGamPost(8)
+plotGamPost(9)
+plotGamPost(10)
+plotGamPost(11)
+
+
 
 
 
