@@ -11,7 +11,6 @@
   }
 }
 
-
 source("MCMC_Scripts/McmcHelperW.R")
 source("MCMC_Scripts/McmcHelperGam.R")
 source("MCMC_Scripts/McmcHelperXi.R")
