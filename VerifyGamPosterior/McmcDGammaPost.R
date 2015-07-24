@@ -42,7 +42,7 @@ dTrGamma <- function(x, a, b, bndL, bndU) {
 
 
 
-# Calculate the value of a_h tilde  --------------------------------------------
+# Calculate the value of b_h tilde  --------------------------------------------
 
 getbTilde <- function(gamLoc, X, U, betaLvOut, xiDay, b) {
   
