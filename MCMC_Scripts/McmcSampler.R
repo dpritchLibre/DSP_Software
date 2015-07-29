@@ -31,7 +31,7 @@ sexName <- "intercourse"
 varInclNames <- list( baseline = c("age","bmi","gravid"),
                       cycle = "cycleLen",
                       daily = "lube" )
-fwDays <- 1:5
+fwLen <- 5
 
 # Delete some arbitrary data to make sure that program can put the data together properly
 myDat <- dspDat(baseline[-c(1,2), ], cycle[-(20:25), ], daily[-tail(1:nrow(daily), n=5), ], 
@@ -55,7 +55,7 @@ xiDay <- xi[idDayExpan]
 
 ###Hyperparameters
 hypGam <- list(ah=1, bh=1, ph=0.5, bndL=0, bndU=5)
-hypPhi <- list(c1 = 1, c2 = 1)
+hypPhi <- list(c1=1, c2=1)
 
 ###Metropolis objects
 delta <- 0.2
