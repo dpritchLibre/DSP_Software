@@ -69,43 +69,41 @@ summary.dspDat <- function(dspDat) {
   
   # internal functions to assist printing --------------------------------------
   
-  printStats <- function(dat) {
-    cat("\n", hline, "\nRaw data:\n\n",
+  printStats <- function(title, dat) {
+    cat("\n", hline, "\n", title, ":\n\n",
         "    baseline data:  ", dat$bas$sub, " subjects\n",
         "    cycle data:     ", dat$cyc$sub, " subjects with ", dat$cyc$cyc, " cycles\n",
         "    daily data:     ", dat$day$sub, " subjects with ", dat$day$cyc, " cycles and ", 
         dat$day$day, " days\n", sep="")
   }
   
-  printVars <- function(charVec, returnWidth=45) {
+  printVars <- function(charVec, returnWidth=40) {
     if (is.null(charVec))
       return (NULL)
     
+    # else
     currLen <- 0
     outVec <- NULL
     
     for (i in 1:length(charVec)) {
+      
       if (currLen >= returnWidth) {
-        outVec <- paste0(outVec, "\n", paste(rep("", 22), collapse=" "))
+        outVec <- paste0(outVec, "\n", paste(rep("", 22), collapse=" "), charVec[i], ", ")
         currLen <- 0
       }
-      else if (currLen != 0) {
-        outVec <- paste0(outVec, ", ", charVec[i])
-        currLen <- currLen + nchar(charVec[i])
-      }
       else {
-        outVec <- paste0(outVec, charVec[i])
+        outVec <- paste0(outVec, charVec[i], ", ")
         currLen <- currLen + nchar(charVec[i])
       }
     }
     
-    return (outVec)
+    return ( substr(outVec, start=1, stop=(nchar(outVec) - 2)) )
   }
   
   # ----------------------------------------------------------------------------
   
-  printStats(datInfo$numRaw)
-  printStats(datInfo$numClean)
+  printStats("Raw data", datInfo$numRaw)
+  printStats("Clean data", datInfo$numClean)
 
   numRed <- datInfo$numRed
   cat("\n", hline, "\nCombining the data:\n\n",
@@ -114,8 +112,10 @@ summary.dspDat <- function(dspDat) {
       " cycles and ", numRed$day, " days\n", sep="")
   
   cat("\n", hline, "\nThe model variables:\n\n",
-      "    variable names:  ", printVars(datInfo$modelVars), "\n",
-      "    design matrix:   ", printVars(datInfo$designMatVars), "\n", sep="")
+      "    variable names:  ", printVars(c("fwDay", datInfo$modelVars)), "\n",
+      "    design matrix:   ", printVars(datInfo$designMatVars), "\n\n", sep="")
+  
+  # TODO: ave number of cycles in study (tot, preg, not preg), num pregnant, num sex
   
   cat(hline, "\n", sep="")
 }
