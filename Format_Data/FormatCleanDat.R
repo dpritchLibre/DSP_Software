@@ -5,7 +5,11 @@
 # observations / cycles that have missing data in the model variables.
 
 getCleanDat <- function(baseline, cycle, daily, varNames, fwLen, cycInDailyIdx) {
-  dayFw <- daily[convToBool(daily[[varNames$fwInd]]), ]
+  # 'NULL' value for fwInd indicates that daily data has already been restricted to FW
+  if (!is.null(varNames$fwInd))
+    dayFw <- daily[convToBool(daily[[varNames$fwInd]]), ]
+  else
+    dayFw <- daily
   
   # Rows with missing data (in the needed cols) for baseline, cycle, daily datasets
   noMissBool <- getNoMissBool(baseline, cycle, dayFw, varNames)

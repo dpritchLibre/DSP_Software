@@ -32,11 +32,16 @@ getDatInfo <- function(baseline, cycle, daily, cleanDat, redDat,
                   cyc = length(unlist(cycList)),
                   day = nrow(redDat$day) )
   
+#   return ( list( numRaw = numRaw,
+#                  numClean = numClean,
+#                  numRed = numRed,
+#                  modelVars = unlist(varInclNames),
+#                  designMatVars = colnames(modelObj$U),
+#                  numSex = sum(modelObj$X),
+#                  numPreg= sum(modelObj$Y) ) )
   return ( list( numRaw = numRaw,
                  numClean = numClean,
                  numRed = numRed,
                  modelVars = unlist(varInclNames),
-                 designMatVars = colnames(modelObj$U),
-                 numSex = sum(modelObj$X),
-                 numPreg= sum(modelObj$Y) ) )
+                 designMatVars = colnames(modelObj$U)) )
 }

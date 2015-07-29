@@ -7,9 +7,9 @@
 # no copies of id+cyc+day in daily
 #
 # baseline/cycle are NULL/mat/arr/df
-# daily is mat/arr/df'
+# daily is mat/arr/df
 #
-# X, Y 0/1 or yes/no
+# X, Y TRUE/FALSE or 0/1 or yes/no
 #
 # (baseline == NULL) <==> (varInclNames$baseline == NULL and similarly for cycle
 # varInclNames all match a name in corresp dataset and similarly for other *Name

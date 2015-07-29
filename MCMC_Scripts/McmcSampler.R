@@ -21,25 +21,26 @@ load("Data/RawData.RData")
 
 
 
+
 # Prepare data for use in MCMC sampler -----------------------------------------
 
 idName <- "subjId"
-cycleName <- "cycle"
-cycleDayName <- "cycleDay"
+cycName <- "cycle"
 pregName <- "pregInd"
 sexName <- "intercourse"
+fwInd <- NULL
 varInclNames <- list( baseline = c("age","bmi","gravid"),
                       cycle = "cycleLen",
                       daily = "lube" )
 fwLen <- 5
 
 # Delete some arbitrary data to make sure that program can put the data together properly
-myDat <- dspDat(baseline[-c(1,2), ], cycle[-(20:25), ], daily[-tail(1:nrow(daily), n=5), ], 
-                idName, cycleName, cycleDayName, pregName, sexName, varInclNames, fwDays)
-summary(myDat)
+myDspDat <- dspDat(baseline[-c(1,2), ], cycle[-(20:25), ], daily[-tail(1:nrow(daily), n=5), ], 
+                   idName, cycName, pregName, sexName, fwInd, varInclNames, fwLen)
+summary(myDspDat)
 
 # Place the sampler objects into global environment for running script
-list2env(myDat$samplerObj, envir=environment())
+list2env(myDspDat$samplerObj, envir=environment())
 
 
 
@@ -145,6 +146,6 @@ for (s in 1:numSamp) {
 # Gamma coefs
 phiTab <- apply(read.csv(file=paste0(outPath, "GAMMA.csv")), MARGIN=2, 
                 FUN=quantile, probs=c(0.025, 0.500, 0.975))
-rbind(phiTab, trueVals <- c(0.14, 0.08, 0.34, 0.31, 0.08, 
-                            exp(c(-0.08, -0.43, -1.03, -0.22, -0.47, 1.21)), rep(1,3)))
+trueVals <- c(0.14, 0.08, 0.34, 0.31, 0.08, exp(c(-0.08, -0.43, -1.03, -0.22, -0.47, 1.21)), rep(1,3))
+rbind(phiTab, trueVals)
 

@@ -25,7 +25,6 @@ dspDat <- function(baseline=NULL, cycle=NULL, daily, idName, cycName,
   
   # TODO: sort data by id/cyc
   # TODO: check valid input
-  # checkValidInput()
   
   # For daily data: remove non-FW days, cycles that have wrong number of FW days or include
   # missing in the cycle (in the model variables).  For baseline / cycle: remove observations 
@@ -68,17 +67,57 @@ summary.dspDat <- function(dspDat) {
   datInfo <- dspDat$datInfo
   hline <- paste0(rep("-", 60), collapse="")
   
-  numClean <- datInfo$numClean
-  cat(hline, "\nAfter cleaning the data:\n\n",
-      "    baseline data:  ", numClean$id$bas, " subjects\n",
-      "    cycle data:     ", numClean$id$cyc, " subjects with ", numClean$cyc$cyc, " cycles\n",
-      "    daily data:     ", numClean$id$day, " subjects with ", numClean$cyc$day, " cycles\n\n",
-      sep="")
+  # internal functions to assist printing --------------------------------------
   
+  printStats <- function(dat) {
+    cat("\n", hline, "\nRaw data:\n\n",
+        "    baseline data:  ", dat$bas$sub, " subjects\n",
+        "    cycle data:     ", dat$cyc$sub, " subjects with ", dat$cyc$cyc, " cycles\n",
+        "    daily data:     ", dat$day$sub, " subjects with ", dat$day$cyc, " cycles and ", 
+        dat$day$day, " days\n", sep="")
+  }
+  
+  printVars <- function(charVec, returnWidth=45) {
+    if (is.null(charVec))
+      return (NULL)
+    
+    currLen <- 0
+    outVec <- NULL
+    
+    for (i in 1:length(charVec)) {
+      if (currLen >= returnWidth) {
+        outVec <- paste0(outVec, "\n", paste(rep("", 22), collapse=" "))
+        currLen <- 0
+      }
+      else if (currLen != 0) {
+        outVec <- paste0(outVec, ", ", charVec[i])
+        currLen <- currLen + nchar(charVec[i])
+      }
+      else {
+        outVec <- paste0(outVec, charVec[i])
+        currLen <- currLen + nchar(charVec[i])
+      }
+    }
+    
+    return (outVec)
+  }
+  
+  # ----------------------------------------------------------------------------
+  
+  printStats(datInfo$numRaw)
+  printStats(datInfo$numClean)
+
   numRed <- datInfo$numRed
-  cat(hline, "\nCombining the data:\n\n",
-      "    common observations:  ", numRed$subj, 
-      " subjects with ", numRed$cyc, " cycles\n\n", sep="")
+  cat("\n", hline, "\nCombining the data:\n\n",
+      "    common observations:  ", numRed$sub, 
+      " subjects with ", numRed$cyc, 
+      " cycles and ", numRed$day, " days\n", sep="")
+  
+  cat("\n", hline, "\nThe model variables:\n\n",
+      "    variable names:  ", printVars(datInfo$modelVars), "\n",
+      "    design matrix:   ", printVars(datInfo$designMatVars), "\n", sep="")
+  
+  cat(hline, "\n", sep="")
 }
 
 
