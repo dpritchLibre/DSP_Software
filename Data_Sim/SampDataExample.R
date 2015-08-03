@@ -87,14 +87,19 @@ dailyDist <- expression( sample( c("no","yes"), size=1, prob=c(0.64, 0.36) ),   
                                  size=1, prob=c(0.04, 0.05, 0.08, 0.04, 0.79) ), #  <-- cm_monit
                          sample( c("no","yes"), size=1, prob=c(0.88, 0.12) ) )   #  <-- lube
 
-dailyPre <- sampDaily(nTot=nrow(cyclePre), fwLen=5, varDist=dailyDist, varNames=dailyNames)
+dailyCycLenDist <- expression( sample(21:35, size=1, 
+                                      prob=c(0.01, 0.02, 0.03, 0.06, 0.08, 0.10, 0.13, 
+                                             0.14, 0.11, 0.09, 0.09, 0.05, 0.04, 0.03, 0.02) ) )
+
+dailyPre <- sampDaily(nTot=nrow(cyclePre), varDist=dailyDist, varNames=dailyNames, 
+                      cycLenDist=dailyCycLenDist, fwRevDays=seq(-13, -17))
 
 
 
 
 # Combine data into a daily set ------------------------------------------------
 
-analyData <- sampDataComb(baseline=baselinePre, cycle=cyclePre, daily=dailyPre, fwLen=5)
+analyData <- sampDataComb(baseline=baselinePre, cycle=cyclePre, daily=dailyPre)
 
 
 
@@ -115,23 +120,9 @@ rm(list=setdiff(ls(), c("baseline","cycle","daily")))
 
 
 
-# Format data into format for use by mcmc sampler ------------------------------
+# Save data for use in sampler -------------------------------------------------
 
-source("Format_Data/FormatDspDat.R")
-
-idName <- "subjId"
-cycleName <- "cycle"
-cycleDayName <- "cycleDay"
-pregName <- "pregInd"
-intercourseName <- "intercourse"
-varInclNames <- list( baseline = c("age","bmi","gravid"),
-                      cycle = "cycleLen",
-                      daily = "lube" )
-
-dspDat <- makeDspDat(baseline, cycle, daily, idName, cycleName, cycleDayName, 
-                     pregName, intercourseName, varInclNames, fwLen=5)
-invisible( list2env(dspDat, envir=.GlobalEnv) )
-save(Y, X, id, U, file="Data/PracticeDat.RData")
+save(list=ls(), file="Data/RawData.RData")
 
 
 

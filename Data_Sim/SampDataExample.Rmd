@@ -29,7 +29,7 @@ subjId <- 1:300
 ```
 
 although the labels could have been any unique identifiers of our choosing.  Note that this intrinsically specifies the study size in terms of subjects (in this case `r length(subjId)`).
-***
+***********************************************************
 
 
 Next we will sample the baseline data.  Note that this could have been done at any time before sampling pregnancy outcome, but we will arbitrarily do it now.  We include the appendage *pre* to the `R` object `baselinePre` and some of the following objects to emphasize that the data is ``pre-completion''.  Of course the baseline will not change, but it is still named as such for consistency with the naming scheme.
@@ -57,7 +57,7 @@ baselinePre <- sampBaseline(subjId=subjId, varDist=baseDist, varNames=baseNames)
 dim(baselinePre)
 names(baselinePre)
 ```
-***
+**********************************************************
 
 
 Next we sample the cycle data.  The data-generation mechanism here requires a little more delicacy to simulate.  First, we wish to specify the (possible) left- and right-truncation observed in the study subjects.  This behavior is specified as the `entryDist` and `lengthDist` variables.  `entryDist` is interpreted as the *number of cycles during which the subject has attempted to become pregnant*, and should specify a distribution with support contained in the natural numbers.  `lengthDist` is interpreted as the *number of cycles the subject is willing to stay in the study after the first*, assuming no pregnancy occurs or that the study ends, and should have support contained in the nonnegative integers.  `maxStudyCyc` is an optional third parameter, which specifies the maximum attempted cycle allowed in the study.  The distributions for the cycle-specific variables are specified similarly to the baseline variable specifications.
@@ -83,7 +83,7 @@ length( unique(cyclePre$subjId) )
 dim(cyclePre)
 names(cyclePre)
 ```
-***
+************************************************************
 
 
 Now we want to sample the daily data.  Besides the now familiar variable specification, we also have to specify the length of what we consider to be the fertile window.  `nTot` specifies the number of *potential* cycles which may occur.
@@ -102,7 +102,7 @@ dailyPre <- sampDaily(nTot=nrow(cyclePre), fwLen=5, varDist=dailyDist, varNames=
 dim(dailyPre)
 names(dailyPre)
 ```
-***
+************************************************************
 
 
 Next we will combine the potential cycle datasets into a single dataset by expanding baseline- and cycle-specific variables into daily variables (i.e. a baseline variable is the same for each day observation within a subject and similarly for cycle variables).  Then we specify the effect size for the variables with a nonzero effect on probability.  `betaDays` specifies the effect size for fertile window day and uses cell-means coding, and so should have length equal to the number of days in the fertile window.  `betaCovs` specifies the effect size for other covariates and uses reference-cell coding, and should have length one less then the number of factors in the variable (or length 1 for a continuous variable).  Then we sample pregnancies and remove the unneeded potential cycles from the datasets.

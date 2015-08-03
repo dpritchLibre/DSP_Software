@@ -28,7 +28,7 @@ idName <- "subjId"
 cycName <- "cycle"
 pregName <- "pregInd"
 sexName <- "intercourse"
-fwInd <- NULL
+fwInd <- "fwInd"
 varInclNames <- list( baseline = c("age","bmi","gravid"),
                       cycle = "cycleLen",
                       daily = "lube" )
@@ -144,8 +144,8 @@ for (s in 1:numSamp) {
 # Summary stats of the output --------------------------------------------------
 
 # Gamma coefs
-phiTab <- apply(read.csv(file=paste0(outPath, "GAMMA.csv")), MARGIN=2, 
+gamTab <- apply(read.csv(file=paste0(outPath, "GAMMA.csv")), MARGIN=2, 
                 FUN=quantile, probs=c(0.025, 0.500, 0.975))
 trueVals <- c(0.14, 0.08, 0.34, 0.31, 0.08, exp(c(-0.08, -0.43, -1.03, -0.22, -0.47, 1.21)), rep(1,3))
-rbind(phiTab, trueVals)
+rbind(gamTab, trueVals)
 
