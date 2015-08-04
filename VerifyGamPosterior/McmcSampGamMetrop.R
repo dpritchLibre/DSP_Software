@@ -51,6 +51,11 @@ sampGamMetrop <- function(W, X, U, gamCoef, xiDay, gamLoc, gamInit,
 
 
 
+
+
+
+
+
 # Calculate log gamma acceptance ratio r ---------------------------------------
 #
 # Acceptance ratio for gamma_h is given by

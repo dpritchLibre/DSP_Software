@@ -5,10 +5,31 @@ dgammaPost <- function(gamVal, gamCoef, gamLoc, W, X, U, xiDay, hypGam) {
   list2env(hypGam, envir=environment())
   betaLvOut <- log(gamCoef[-gamLoc])
   
-  aTilde <- ah + sum(W * U[, gamLoc] )
+  aTilde <- ah + drop( crossprod(W, U[, gamLoc]) )
   bTilde <- getbTilde(gamLoc, X, U, betaLvOut, xiDay, bh)
   pTilde <- getpTilde(ph, ah, bh, bndL, bndU, aTilde, bTilde)
 
+  ptMassBool <- ( gamVal == 1 )
+  denVal <- numeric(length=length(gamVal))
+  denVal[ptMassBool] <- pTilde
+  denVal[!ptMassBool] <- (1 - pTilde) * dTrGamma(x=gamVal[!ptMassBool], a=aTilde, 
+                                                 b=bTilde, bndL=bndL, bndU=bndU)
+  return (denVal)
+}
+
+
+
+
+# Density fcn for gamma posterior Dunson ver -----------------------------------
+
+dgammaPostDuns <- function(gamVal, gamCoef, gamLoc, W, X, U, xiDay, hypGam) {
+  list2env(hypGam, envir=environment())
+  betaLvOut <- log(gamCoef[-gamLoc])
+  
+  aTilde <- ah + drop( crossprod(W, U[, gamLoc]) )
+  bTilde <- getbTildeDuns(gamLoc, X, U, betaLvOut, xiDay, bh)
+  pTilde <- getpTilde(ph, ah, bh, bndL, bndU, aTilde, bTilde)
+  
   ptMassBool <- ( gamVal == 1 )
   denVal <- numeric(length=length(gamVal))
   denVal[ptMassBool] <- pTilde
@@ -47,6 +68,19 @@ dTrGamma <- function(x, a, b, bndL, bndU) {
 getbTilde <- function(gamLoc, X, U, betaLvOut, xiDay, b) {
   
   subsetIdx <- (X == 1) & drop(U[, gamLoc] == 1)
+  xiSub <- xiDay[subsetIdx]
+  Usub <- U[subsetIdx, -gamLoc]
+  logProdTerms <- log(xiSub) + drop(Usub %*% betaLvOut)
+  return ( b + sum(exp(logProdTerms)) )
+}
+
+
+
+
+# Calculate the value of b_h tilde Dunson ver ----------------------------------
+getbTildeDuns <- function(gamLoc, X, U, betaLvOut, xiDay, b) {
+  
+  subsetIdx <- drop(U[, gamLoc] == 1)
   xiSub <- xiDay[subsetIdx]
   Usub <- U[subsetIdx, -gamLoc]
   logProdTerms <- log(xiSub) + drop(Usub %*% betaLvOut)
