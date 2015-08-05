@@ -37,7 +37,7 @@ dspDat <- function(baseline=NULL, cycle=NULL, daily, idName, cycName,
   redDat <- getRedDat(cleanDat, varNames, idVec, cycList)
 
   # Create X, Y, and U (from the Dunson and Stanford paper)
-  modelObj <- getModelObj(redDat, varNames, fwLen, cycList)
+  modelObj <- getModelObj(redDat, varNames, varInclNames, fwLen, cycList)
   
   # Create objects for use in MCMC sampler (see 'FormatGetSamplerObj.R' for more details)
   samplerObj <- getSamplerObj(modelObj, fwLen)

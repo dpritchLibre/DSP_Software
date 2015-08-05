@@ -1,7 +1,7 @@
 
 # Combine base, cyc, day data into desing matrix -------------------------------
 
-getModelObj <- function(redDat, varNames, fwLen, cycList) {
+getModelObj <- function(redDat, varNames, varInclNames, fwLen, cycList) {
   niVec <- Filter(sapply(cycList, length), f=as.logical)
   numOf <- list( subj = length(niVec),
                  cyc  = sum(niVec) )

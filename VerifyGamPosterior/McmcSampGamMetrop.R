@@ -1,52 +1,75 @@
 
 sampGamMetrop <- function(W, X, U, gamCoef, xiDay, gamLoc, gamInit, 
-                          hypGam, B, pJ, delta, verbose=FALSE, trackProg=TRUE) {
+                          hypGam, numSamp, pJ, delta, verbose=FALSE, trackProg=TRUE) {
   betaCoef <- log(gamCoef)
   currGam <- gamInit
+  currM <- TRUE
   gamSampVec <- numeric(length=B)
   if (verbose)
     logRVec <- propValVec <- numeric(length=B)
   gamCurrCoef <- replace(x=gamCoef, list=gamLoc, values=gamInit)
-  trackVals <- sapply(X=seq(0.1, 0.9, by=0.1), FUN=function(x) max(which( 1:B / B <= x)))
+  trackVals <- sapply(X=seq(0.1, 0.9, by=0.1), FUN=function(x) max(which( 1:numSamp / numSamp <= x)))
  
   numAccept <- 0
   sampBool <- function(p) sample(c(TRUE, FALSE), size=1, prob=c(p, 1-p))
   
   
-  for (i in 1:B) {
-    
-    if (sampBool(pJ))
-      propVal <- 1
-    else 
-      propVal <- abs( runif(n=1, min=(currGam - delta), max=(currGam + delta)) )
+#   for (i in 1:B) {
+#     
+#     if (sampBool(pJ))
+#       propVal <- 1
+#     else 
+#       propVal <- abs( runif(n=1, min=(currGam - delta), max=(currGam + delta)) )
+# 
+#     logR <- getLogR(W, X, U, gamCurrCoef, xiDay, propVal, gamLoc, hypGam)
+#     if (log(runif(1)) < logR) {
+#       gamCurrCoef[gamLoc] <- currGam <- propVal
+#       numAccept <- numAccept + 1
+#     }
+# 
+#     gamSampVec[i] <- currGam
+#     if (verbose) {
+#       logRVec[i] <- logR
+#       propValVec[i] <- propVal
+#     }
+#     
+#     if (trackProg && (i %in% trackVals))
+#       cat(round(100 * i / B), "%..  ", sep="")
+#   }
+#   if (trackProg)
+#     cat("\n")
+#   
+#   if (!verbose) 
+#     return (gamSampVec)
+#   else {
+#     gamMetropList <- list( gamSamp = gamSampVec,
+#                            acceptRate = numAccept / B,
+#                            propVal = propValVec,
+#                            logR = logRVec )
+#     return (gamMetropList)
+#   }
 
-    logR <- getLogR(W, X, U, gamCurrCoef, xiDay, propVal, gamLoc, hypGam)
-    if (log(runif(1)) < logR) {
-      gamCurrCoef[gamLoc] <- currGam <- propVal
-      numAccept <- numAccept + 1
-    }
-
-    gamSampVec[i] <- currGam
-    if (verbose) {
-      logRVec[i] <- logR
-      propValVec[i] <- propVal
-    }
+  for (i in 1:numSamp) {
     
-    if (trackProg && (i %in% trackVals))
-      cat(round(100 * i / B), "%..  ", sep="")
+    if (currM)
+      currGam <- rgamma(1, shape=1, rate=1)
+    
+    
+    
   }
-  if (trackProg)
-    cat("\n")
+}
+
+
+
+
+# Calculate posterior prob that M == 1 -----------------------------------------
+
+getMPostProb <- function() {
+  gamIsOneBeta <- replace(log(gamCoef), list=gamLoc, values=0)
+  gamIsNotOneBeta <- replace(log(gamCof), list=gamLoc, values=currGam)
   
-  if (!verbose) 
-    return (gamSampVec)
-  else {
-    gamMetropList <- list( gamSamp = gamSampVec,
-                           acceptRate = numAccept / B,
-                           propVal = propValVec,
-                           logR = logRVec )
-    return (gamMetropList)
-  }
+  termGamIsOne <- dW(W, X, U, gamIsOneBeta, xiDay, FALSE)
+  termGamIsNotOne <- dW(W, X, U, gamIsNotOneBeta, xiDay, FALSE)
 }
 
 
