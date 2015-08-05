@@ -19,8 +19,7 @@ getModelObj <- function(redDat, varNames, varInclNames, fwLen, cycList) {
   uFactor <- suppressWarnings( data.frame(fwDay, Filter(length, covDat)) ) 
   
   # Formula for use by model.matrix to convert factors to design matrix
-  theModelFormula <- formula( paste0("~ -1 + fwDay + ", 
-                                     paste(unlist(varInclNames), collapse=" + ")) )
+  theModelFormula <- formula( paste(c("~ -1 + fwDay", unlist(varInclNames)), collapse=" + ") )
   # Covariate matrix converted to design matrix
   U <- model.matrix(theModelFormula, data=uFactor)
   
