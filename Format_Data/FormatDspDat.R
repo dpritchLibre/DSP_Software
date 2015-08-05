@@ -23,8 +23,12 @@ dspDat <- function(baseline=NULL, cycle=NULL, daily, idName, cycName,
                     dayIncl = c(idName, cycName, keepIfPregInSet(daily), 
                                 sexName, fwIndName, varInclNames$daily) )
   
-  # TODO: sort data by id/cyc
   # TODO: check valid input
+  
+  # Sort data by id/cyc
+  if (!is.null(baseline)) baseline <- baseline[order(baseline[[idName]]), ]
+  if (!is.null(cycle)) cycle <- cycle[order(cycle[[idName]], cycle[[cycName]]), ]
+  daily <- daily[order(daily[[idName]], daily[[cycName]]), ]
   
   # For daily data: remove non-FW days, cycles that have wrong number of FW days or include
   # missing in the cycle (in the model variables).  For baseline / cycle: remove observations 
