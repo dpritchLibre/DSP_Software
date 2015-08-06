@@ -11,12 +11,11 @@ getModelObj <- function(redDat, varNames, varInclNames, fwLen, cycList) {
   
   # Combine datasets into a daily dataset that still contains factors
   fwDay <- as.factor( rep(1:fwLen, times=numOf$cyc) )
-  dayKeepVars <- setdiff(varNames$dayIncl, c(varNames$id, varNames$cyc))
   covDat <- list( redDat$bas[basExpan, , drop=FALSE],
                   redDat$cyc[cycExpan, , drop=FALSE],
                   redDat$day[, , drop=FALSE] )
   # Suppressed warning: rows have same names (due to expansion)
-  uFactor <- suppressWarnings( data.frame(fwDay, Filter(length, covDat)) ) 
+  uFactor <- suppressWarnings( data.frame(fwDay, covDat) )
   
   # Formula for use by model.matrix to convert factors to design matrix
   theModelFormula <- formula( paste(c("~ -1 + fwDay", unlist(varInclNames)), collapse=" + ") )

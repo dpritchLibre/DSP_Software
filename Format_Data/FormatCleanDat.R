@@ -5,7 +5,7 @@
 # observations / cycles that have missing data in the model variables.
 
 getCleanDat <- function(baseline, cycle, daily, varNames, fwLen, cycInDailyIdx) {
-  # 'NULL' value for fwInd indicates that daily data has already been restricted to FW
+  # 'NULL' value for 'fwInd' indicates that daily data has already been restricted to FW
   if (!is.null(varNames$fwInd))
     dayFw <- daily[convToBool(daily[[varNames$fwInd]]), ]
   else
