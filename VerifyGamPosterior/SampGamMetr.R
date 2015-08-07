@@ -1,10 +1,12 @@
 
 sampGamMetrop <- function(W, X, U, gamCoef, xiDay, gamLoc, gamInit, 
-                          hypGam, numSamp, pJ, delta, trackProg=TRUE) {
+                          hypGam, numSamp, delta, trackProg=TRUE, usePost=FALSE) {
   currTheta <- gamInit
   betaLvOut <- log(gamCoef[-gamLoc])
   gamSampVec <- numeric(numSamp)
   trackVals <- sapply(seq(0.1, 0.9, by=0.1), function(x) max(which( 1:numSamp / numSamp <= x)))
+  numAcc <- 0
+  numMetr <- 0
 
   for (i in 1:numSamp) {
     
@@ -16,18 +18,28 @@ sampGamMetrop <- function(W, X, U, gamCoef, xiDay, gamLoc, gamInit,
       currTheta <- rgamma(1, shape=hypGam$ah, rate=hypGam$bh)
       gamSampVec[i] <- 1
     }
-    else {
+    else if (usePost) {
       aTilde <- getaTilde(W, U, gamLoc, hypGam$ah)
       bTilde <- getbTilde(gamLoc, X, U, betaLvOut, xiDay, hypGam$bh)
-      currTheta <- rgamma(1, shape=aTilde, rate=bTilde)
+      gamSampVec[i] <- currTheta <- rgamma(1, shape=aTilde, rate=bTilde)
+    }
+    else {
+      propTheta <- abs( runif(1, currTheta - delta, currTheta + delta) )
+      logR <- getLogR(W, X, U, gamCoef, xiDay, propTheta, gamLoc, hypGam)
+      if (log(runif(1)) < logR) {
+        currTheta <- propTheta
+        numAcc <- numAcc + 1
+      }
+
       gamSampVec[i] <- currTheta
+      numMetr <- numMetr + 1
     }
     
     gamCoef[gamLoc] <- gamSampVec[i]
     if (trackProg && (i %in% trackVals))
       cat(round(100 * i / numSamp), "%..  ", sep="")
   }
-  if (trackProg) cat("\n")
+  if (trackProg) cat("  Acc. rate:  ", round(100 * numAcc / numMetr), "%\n")
   
   return (gamSampVec)
 }

@@ -42,7 +42,7 @@ xiDay <- rep(xi, times=table(id))
 
 # Sample p(gamma_h | ...) via Metropolis algorithm =================================
 
-B <- 1e3        # number of Metropolis iterations
+B <- 5e3        # number of Metropolis iterations
 pJ <- 0.1       # prob of selecting gamma_h = 1 in proposal dist
 delta <- 0.1    # proposal dist tuning param
 hypGam <- list(bndL=0, bndU=Inf, ph=0.5, ah=1, bh=1)
@@ -54,7 +54,7 @@ gamMetrMat <- matrix(nrow=B, ncol=length(gamCoef))
 for (j in 1:length(gamCoef)) {
   cat("Sampling gamma_", j, ":  ", sep="")
   gamInit <- abs( runif(n=1, min=(gamCoef[j] - delta), max=(gamCoef[j] + delta)) )
-  gamMetrMat[,j] <- sampGamMetrop(W, X, U, gamCoef, xiDay, j, gamInit, hypGam, B, pJ, delta)
+  gamMetrMat[,j] <- sampGamMetrop(W, X, U, gamCoef, xiDay, j, gamInit, hypGam, B, delta)
 }
 
 
