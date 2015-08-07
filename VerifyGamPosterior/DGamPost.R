@@ -5,7 +5,7 @@ dgammaPost <- function(gamVal, gamCoef, gamLoc, W, X, U, xiDay, hypGam) {
   list2env(hypGam, envir=environment())
   betaLvOut <- log(gamCoef[-gamLoc])
   
-  aTilde <- ah + drop( crossprod(W, U[, gamLoc]) )
+  aTilde <- getaTilde(W, U, gamLoc, ah)
   bTilde <- getbTilde(gamLoc, X, U, betaLvOut, xiDay, bh)
   pTilde <- getpTilde(ph, ah, bh, bndL, bndU, aTilde, bTilde)
 
@@ -57,13 +57,21 @@ pgammaPost <- function(gamVal, gamCoef, gamLoc, W, X, U, xiDay, p, a, b, bndL, b
 # Calc the density function of a truncated gamma -------------------------------
 
 dTrGamma <- function(x, a, b, bndL, bndU) {
-  
-  return (dgamma(x=x, shape=a, rate=b) / getTrGamNorm(a, b, bndL, bndU))
+  dgamma(x=x, shape=a, rate=b) / getTrGamNorm(a, b, bndL, bndU)
 }
 
 
 
-# Calculate the value of b_h tilde  --------------------------------------------
+
+# Calculate the value of a_h tilde ---------------------------------------------
+
+getaTilde <- function(W, U, gamLoc, ah) {
+  ah + drop( crossprod(W, U[, gamLoc]) )
+}
+
+
+
+# Calculate the value of b_h tilde ---------------------------------------------
 
 getbTilde <- function(gamLoc, X, U, betaLvOut, xiDay, b) {
   
@@ -130,15 +138,4 @@ getLogGamConst <- function(a, b) {
 getTrGamNorm <- function(a, b, bndL, bndU) {
   pgamma(q=bndU, shape=a, rate=b) - pgamma(q=bndL, shape=a, rate=b)
 }
-
-
-
-
-
-
-
-
-
-  
-
 

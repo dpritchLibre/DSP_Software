@@ -6,7 +6,7 @@ getSamplerObj <- function(modelObj, fwLen) {
   list2env(modelObj, envir=environment())
   
   pregDayBool <- rep(convToBool(Y), each=fwLen)
-  sexBool <- (convToBool(X) == 1)
+  sexBool <- convToBool(X)
   sexPregBool <- (sexBool & pregDayBool)
   
   n <- length(unique(id[sexBool])) # number of individuals

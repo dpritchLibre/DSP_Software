@@ -8,8 +8,8 @@
 }
 
 load("Data/PracticeDatAuxMod.RData")
-source("VerifyGamPosterior/McmcSampGamMetrop.R")
-source("VerifyGamPosterior/McmcDGammaPost.R")
+source("VerifyGamPosterior/SampGamMetr.R")
+source("VerifyGamPosterior/DGamPost.R")
 set.seed(0)
 
 
@@ -141,7 +141,7 @@ plotGamMetrDen <- function (gamMetrVec, gamLoc, domain, numPts, trueVal, showDun
 
 # Convenience wrapper for plotGamMetrDen fcn -----------------------------------
 
-plotGamPost <- function(gamLoc, showDuns) {
+plotGamPost <- function(gamLoc, showDuns=FALSE) {
   trueVal <- gamCoef[gamLoc]
   fx <- dgammaPost(gamVal=seq(from=0.05, to=5.00, by=0.05), gamCoef=gamCoef, 
                    gamLoc=gamLoc, W=W, X=X, U=U, xiDay=xiDay, hypGam=hypGam)
@@ -158,17 +158,17 @@ plotGamPost <- function(gamLoc, showDuns) {
 
 numPts <- 100  # how many points to put in plots
 
-plotGamPost(1, TRUE)
-plotGamPost(2, TRUE)
-plotGamPost(3, TRUE)
-plotGamPost(4, TRUE)
-plotGamPost(5, TRUE)
-plotGamPost(6, TRUE)
-plotGamPost(7, TRUE)
-plotGamPost(8, TRUE)
-plotGamPost(9, TRUE)
-plotGamPost(10, TRUE)
-plotGamPost(11, TRUE)
+plotGamPost(1)
+plotGamPost(2)
+plotGamPost(3)
+plotGamPost(4)
+plotGamPost(5)
+plotGamPost(6)
+plotGamPost(7)
+plotGamPost(8)
+plotGamPost(9)
+plotGamPost(10)
+plotGamPost(11)
 
 
 
