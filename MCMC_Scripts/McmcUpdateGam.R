@@ -4,9 +4,9 @@
 sampGammaH <- function(W, uProdBetaNoH, xiDay, hypGamH, uIsOneBool, pregUIsOneBool, hIsTrunBool) {
   list2env(hypGamH, envir=environment())
   
-  aTilde <- ah + sum(W[pregUIsOneBool])
-  bTilde <- getbTilde(uProdBetaNoH, xiDay, bh, uIsOneBool)
-  pTilde <- getpTilde(ph, ah, bh, bndL, bndU, aTilde, bTilde)
+  aTilde <- a + sum(W[pregUIsOneBool])
+  bTilde <- getbTilde(uProdBetaNoH, xiDay, b, uIsOneBool)
+  pTilde <- getpTilde(p, a, b, bndL, bndU, aTilde, bTilde)
   
   if (sampBool(pTilde))
     return (1)
@@ -44,10 +44,10 @@ sampGammaTr <- function(aTilde, bTilde, bndL, bndU, hIsTrunBool) {
 #
 # Calculates the terms inside the summation on the log scale
 
-getbTilde <- function(uProdBetaNoH, xiDay, bh, uIsOneBool) {
+getbTilde <- function(uProdBetaNoH, xiDay, b, uIsOneBool) {
 
   logProdVec <- log( xiDay[uIsOneBool] ) + uProdBetaNoH[uIsOneBool]
-  return ( bh + sum(exp(logProdVec)) )
+  return ( b + sum(exp(logProdVec)) )
 }
 
 

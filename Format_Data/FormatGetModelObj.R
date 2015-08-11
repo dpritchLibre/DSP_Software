@@ -1,7 +1,7 @@
 
 # Combine base, cyc, day data into desing matrix -------------------------------
 
-getModelObj <- function(redDat, varNames, varInclNames, fwLen, cycList) {
+getModelObj <- function(redDat, varNames, fwLen, cycList) {
   niVec <- Filter(sapply(cycList, length), f=as.logical)
   numOf <- list( subj = length(niVec),
                  cyc  = sum(niVec) )
@@ -10,17 +10,12 @@ getModelObj <- function(redDat, varNames, varInclNames, fwLen, cycList) {
   cycExpan <- rep(1:numOf$cyc, each=fwLen)
   
   # Combine datasets into a daily dataset that still contains factors
-  fwDay <- as.factor( rep(1:fwLen, times=numOf$cyc) )
+  redDat$day[[varNames$fw]] <- as.factor( rep(1:fwLen, times=numOf$cyc) )
   covDat <- Filter( length, list( redDat$bas[basExpan, , drop=FALSE],
                                   redDat$cyc[cycExpan, , drop=FALSE],
                                   redDat$day[, , drop=FALSE] ) )
-  # Suppressed warning: rows have same names (due to expansion)
-  uFactor <- suppressWarnings( data.frame(fwDay, covDat) )
-  
-  # Formula for use by model.matrix to convert factors to design matrix
-  theModelFormula <- formula( paste(c("~ -1 + fwDay", unlist(varInclNames)), collapse=" + ") )
   # Covariate matrix converted to design matrix
-  U <- model.matrix(theModelFormula, data=uFactor)
+  U <- model.matrix(formula, data=data.frame(covDat))
   
   if (varNames$preg %in% names(redDat$cyc))
     Y <- redDat$cyc[[varNames$preg]]

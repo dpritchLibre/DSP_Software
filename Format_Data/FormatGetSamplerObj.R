@@ -29,6 +29,7 @@ getSamplerObj <- function(modelObj, fwLen) {
   # Reduce objects to intercourse days
   U <- U[sexBool, ]
   pregDayBool <- pregDayBool[sexBool]
+  # Indexes the subjects who have a pregnancy; used for updating xi
   idPregIdx <- which( tapply(pregDayBool, INDEX=id[sexBool], FUN=function(x) TRUE %in% x) )
   
   # Convert binary cols of U to boolean
@@ -47,6 +48,8 @@ getSamplerObj <- function(modelObj, fwLen) {
                       idDayExpan = idDayExpan,
                       idPregIdx = idPregIdx,
                       n = n,
-                      q = q )
+                      q = q,
+                      subjId = unique(id[sexBool]),
+                      varNames = colnames(U) )
   return (samplerObj)
 }

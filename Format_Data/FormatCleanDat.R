@@ -4,10 +4,10 @@
 # Remove non-fertile window days, cycles that have wrong number of days, and
 # observations / cycles that have missing data in the model variables.
 
-getCleanDat <- function(baseline, cycle, daily, varNames, fwLen, cycInDailyIdx) {
+getCleanDat <- function(baseline, cycle, daily, varNames, fwLen) {
   # 'NULL' value for 'fwInd' indicates that daily data has already been restricted to FW
-  if (!is.null(varNames$fwInd))
-    dayFw <- daily[convToBool(daily[[varNames$fwInd]]), ]
+  if (!is.null(varNames$fw))
+    dayFw <- daily[convToBool(daily[[varNames$fw]]), ]
   else
     dayFw <- daily
   

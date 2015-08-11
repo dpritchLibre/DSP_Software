@@ -1,4 +1,24 @@
 
+# Partition the model variables by dataset -------------------------------------
+
+getVarNames <- function(formula, baseline, cycle, daily, idName, cycName, sexName, fwName) {
+  explNames <- all.vars(formula)
+  varInSetBool <- function(set) explNames %in% names(set)
+  
+  varNames <- list( id = idName,
+                    cyc = cycName,
+                    preg = explNames[1],
+                    sex = sexName,
+                    fw = fwName,
+                    basIncl = c(idName, explNames[varInSetBool(baseline)]),
+                    cycIncl = c(idName, cycName, explNames[varInSetBool(cycle)]),
+                    dayIncl = c(idName, cycName, sexName, fwName, explNames[varInSetBool(daily)]) )
+  return (varNames)
+}
+
+
+
+
 # Obtain vector of common id's that are needed ---------------------------------
 #
 # NULL[[idName]] == NULL    <-- behavior of NULL object for when bas / cyc are null
@@ -22,8 +42,8 @@ getCommonId <- function(cleanDat, idName) {
 # Obtain list of common cycles that are needed ---------------------------------
 
 getCommonCyc <- function(cleanDat, varNames, idVec) {
-  cycId <- cleanDat$cyc[[idName]]
-  dayId <- cleanDat$day[[idName]]
+  cycId <- cleanDat$cyc[[varNames$id]]
+  dayId <- cleanDat$day[[varNames$id]]
   cycName <- varNames$cyc
   n <- length(idVec)
   

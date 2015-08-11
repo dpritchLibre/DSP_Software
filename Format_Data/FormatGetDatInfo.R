@@ -1,8 +1,8 @@
 
 # Obtain info about the data munging process -----------------------------------
 
-getDatInfo <- function(baseline, cycle, daily, cleanDat, redDat, 
-                       modelObj, varNames, varInclNames, fwLen, idVec, cycList) {
+getDatInfo <- function(formula, baseline, cycle, daily, cleanDat, 
+                       redDat, modelObj, varNames, fwLen, idVec, cycList) {
   
   idName <- varNames$id
   cycName <- varNames$cyc
@@ -35,7 +35,7 @@ getDatInfo <- function(baseline, cycle, daily, cleanDat, redDat,
   return ( list( numRaw = numRaw,
                  numClean = numClean,
                  numRed = numRed,
-                 modelVars = unlist(varInclNames),
+                 modelVars = all.vars(formula)[-1],
                  designMatVars = colnames(modelObj$U),
                  numSex = sum(convToBool(modelObj$X)),
                  numPreg= sum(convToBool(modelObj$Y)) ) )

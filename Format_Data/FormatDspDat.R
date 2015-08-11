@@ -1,8 +1,8 @@
 
 # Mung data into format for use by mcmc sampler ================================
 
-dspDat <- function(baseline=NULL, cycle=NULL, daily, idName, cycName, 
-                   pregName, sexName, fwIndName=NULL, varInclNames, fwLen) {
+dspDat <- function(formula, baseline=NULL, cycle=NULL, daily, 
+                   idName, cycName, sexName, fwName=NULL, fwLen) {
   source("Format_Data/FormatCheckValidInput.R")
   source("Format_Data/FormatHelperFcns.R")
   source("Format_Data/FormatCleanDat.R")
@@ -11,19 +11,10 @@ dspDat <- function(baseline=NULL, cycle=NULL, daily, idName, cycName,
   source("Format_Data/FormatGetSamplerObj.R")
   source("Format_Data/FormatGetDatInfo.R")
   
-  # Create vectors of var names needed for each dataset
-  keepIfPregInSet <- function(set) if (pregName %in% names(set)) pregName else NULL
-  varNames <- list( id = idName,
-                    cyc = cycName,
-                    preg = pregName,
-                    sex = sexName,
-                    fwInd = fwIndName,
-                    basIncl = c(idName, varInclNames$baseline),
-                    cycIncl = c(idName, cycName, keepIfPregInSet(cycle), varInclNames$cycle),
-                    dayIncl = c(idName, cycName, keepIfPregInSet(daily), 
-                                sexName, fwIndName, varInclNames$daily) )
-  
   # TODO: check valid input
+  
+  # Partition the model variables by dataset
+  varNames <- getVarNames(formula, baseline, cycle, daily, idName, cycName, sexName, fwName)
   
   # Sort data by id/cyc
   if (!is.null(baseline)) baseline <- baseline[order(baseline[[idName]]), ]
@@ -33,7 +24,7 @@ dspDat <- function(baseline=NULL, cycle=NULL, daily, idName, cycName,
   # For daily data: remove non-FW days, cycles that have wrong number of FW days or include
   # missing in the cycle (in the model variables).  For baseline / cycle: remove observations 
   # that have missing data (in the model variables).
-  cleanDat <- getCleanDat(baseline, cycle, daily, varNames, fwLen, cycInDaily)
+  cleanDat <- getCleanDat(baseline, cycle, daily, varNames, fwLen)
   
   # Reduce data to subjects and cycles that are common to all datasets
   idVec <- getCommonId(cleanDat, idName)
@@ -41,14 +32,14 @@ dspDat <- function(baseline=NULL, cycle=NULL, daily, idName, cycName,
   redDat <- getRedDat(cleanDat, varNames, idVec, cycList)
 
   # Create X, Y, and U (from the Dunson and Stanford paper)
-  modelObj <- getModelObj(redDat, varNames, varInclNames, fwLen, cycList)
+  modelObj <- getModelObj(redDat, varNames, fwLen, cycList)
   
   # Create objects for use in MCMC sampler (see 'FormatGetSamplerObj.R' for more details)
   samplerObj <- getSamplerObj(modelObj, fwLen)
   
   # Stats related to munging process for use by summary fcn
-  datInfo <- getDatInfo(baseline, cycle, daily, cleanDat, redDat, 
-                        modelObj, varNames, varInclNames, fwLen, idVec, cycList)
+  datInfo <- getDatInfo(formula, baseline, cycle, daily, cleanDat, 
+                        redDat, modelObj, varNames, fwLen, idVec, cycList)
   
   # Construct dspDat object
   dspDat <- list( baseline = baseline,
@@ -116,7 +107,7 @@ summary.dspDat <- function(dspDat) {
       " cycles and ", numRed$day, " days\n", sep="")
   
   cat("\n", hline, "\nThe model variables:\n\n",
-      "    variable names:  ", printVars(c("fwDay", datInfo$modelVars)), "\n",
+      "    variable names:  ", printVars(datInfo$modelVars), "\n",
       "    design matrix:   ", printVars(datInfo$designMatVars), "\n\n", sep="")
   
   # TODO: ave number of cycles in study (tot, preg, not preg), num pregnant, num sex

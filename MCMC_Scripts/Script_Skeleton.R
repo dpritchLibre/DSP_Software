@@ -6,7 +6,7 @@
     setwd("/Users/Sam/Documents/Sam/School/Graduate/Dave/DSP_Software/")
 }
 load("Data/PracticeDat.RData")
-source("MCMC_Scripts/Mcmc_HelperFcns.R")
+source("MCMC_Scripts/Script_SkeletonHelper.R")
 
 ###Create data objects
 K <- 5 #fertile window
